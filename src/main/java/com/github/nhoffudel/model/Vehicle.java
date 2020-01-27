@@ -9,6 +9,7 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    String vin;
     String name;
     String make;
     String model;
@@ -22,9 +23,10 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(long id, String name, String make, String model, int year, String color,
+    public Vehicle(long id, String vin, String name, String make, String model, int year, String color,
                    String engine, String trim, String notes, Long ownerID) {
         this.id = id;
+        this.vin = vin;
         this.name = name;
         this.make = make;
         this.model = model;
@@ -42,6 +44,14 @@ public class Vehicle {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getVIN() {
+        return vin;
+    }
+
+    public void setVIN(String vin) {
+        this.vin = vin;
     }
 
     public String getName() {
