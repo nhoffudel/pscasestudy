@@ -54,7 +54,7 @@ console.log(jsonPerson);
 
 _postOnClick(
     "create-button",
-    "localhost:8091/person-controller/create",
+    "localhost:8080/person-controller/create",
     jsonPerson);
 
 
@@ -64,7 +64,7 @@ function _postOnClick(buttonId, endpoint, args){
             type: "POST",
             url: endpoint,
             data: args,
-            dataType: "application/x-www-form-urlencoded",
+            dataType: application/json,
             success : function(response) {
                     alert(JSON.stringify(response));
                     },

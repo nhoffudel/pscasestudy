@@ -1,4 +1,4 @@
-package com.github.curriculeon;
+package com.github.nhoffudel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

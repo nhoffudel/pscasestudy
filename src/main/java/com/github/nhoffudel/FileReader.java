@@ -1,4 +1,4 @@
-package com.github.curriculeon;
+package com.github.nhoffudel;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package com.github.curriculeon.controller;
+package com.github.nhoffudel.controller;
 
-import com.github.curriculeon.model.Person;
-import com.github.curriculeon.service.PersonService;
+import com.github.nhoffudel.model.Person;
+import com.github.nhoffudel.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

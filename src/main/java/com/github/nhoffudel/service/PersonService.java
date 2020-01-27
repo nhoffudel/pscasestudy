@@ -1,7 +1,8 @@
-package com.github.curriculeon.service;
+package com.github.nhoffudel.service;
 
-import com.github.curriculeon.model.Person;
-import com.github.curriculeon.repository.PersonRepository;
+import com.github.nhoffudel.model.Person;
+import com.github.nhoffudel.repository.PersonRepository;
+import com.github.nhoffudel.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

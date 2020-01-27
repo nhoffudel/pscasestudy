@@ -1,4 +1,4 @@
-package com.github.curriculeon.model;
+package com.github.nhoffudel.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

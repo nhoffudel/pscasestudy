@@ -1,6 +1,6 @@
-package com.github.curriculeon.repository;
+package com.github.nhoffudel.repository;
 
-import com.github.curriculeon.model.Person;
+import com.github.nhoffudel.model.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
