@@ -11,8 +11,8 @@ public class Trip {
     Long id;
     Long ownerID;
     Long vehID;
-    Date datebegin;
-    Date dateend;
+    int datebegin;
+    int dateend;
     String placebegin;
     String placeend;
     double milesbegin;
@@ -21,9 +21,10 @@ public class Trip {
     String notes;
 
     public Trip() {
+        this.id = -1L;
     }
 
-    public Trip(Long id, Long ownerID, Long vehID, Date datebegin, Date dateend,
+    public Trip(Long id, Long ownerID, Long vehID, int datebegin, int dateend,
                 String placebegin, String placeend, double milesbegin, double milesend,
                 double fuelecon, String notes) {
         this.id = id;
@@ -63,19 +64,19 @@ public class Trip {
         this.vehID = vehID;
     }
 
-    public Date getDatebegin() {
+    public int getDatebegin() {
         return datebegin;
     }
 
-    public void setDatebegin(Date datebegin) {
+    public void setDatebegin(int datebegin) {
         this.datebegin = datebegin;
     }
 
-    public Date getDateend() {
+    public int getDateend() {
         return dateend;
     }
 
-    public void setDateend(Date dateend) {
+    public void setDateend(int dateend) {
         this.dateend = dateend;
     }
 

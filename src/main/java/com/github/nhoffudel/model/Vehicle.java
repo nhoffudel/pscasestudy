@@ -21,6 +21,7 @@ public class Vehicle {
     Long ownerID;
 
     public Vehicle() {
+        this.id = -1L;
     }
 
     public Vehicle(long id, String vin, String name, String make, String model, int year, String color,

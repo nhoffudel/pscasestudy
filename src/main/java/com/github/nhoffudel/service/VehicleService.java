@@ -5,9 +5,7 @@ import com.github.nhoffudel.repository.VehicleHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VehicleService {
@@ -19,13 +17,11 @@ public class VehicleService {
     }
 
     public Vehicle create(Vehicle vehicle) {
-        Vehicle vehicleCreated = handler.create(vehicle);
-        return vehicleCreated;
+        return handler.create(vehicle);
     }
 
     public Vehicle read(Long id) {
-        Vehicle potentialVehicle = handler.findById(id);
-        return potentialVehicle;
+        return handler.findById(id);
     }
 
     public Vehicle update(Long id, Vehicle vehicle) {

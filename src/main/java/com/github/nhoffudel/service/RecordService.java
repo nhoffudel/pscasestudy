@@ -17,13 +17,11 @@ public class RecordService {
     }
 
     public Record create(Record record) {
-        Record recordCreated = handler.create(record);
-        return recordCreated;
+        return handler.create(record);
     }
 
     public Record read(Long id) {
-        Record potentialRecord = handler.findById(id);
-        return potentialRecord;
+        return handler.findById(id);
     }
 
     public Record update(Long id, Record record) {
