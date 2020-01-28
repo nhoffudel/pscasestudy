@@ -12,16 +12,17 @@ public class Record {
     Long vehID;
     Long ownerID;
     String name;
-    Date date;
+    int date;
     double miles;
     double cost;
     String location;
     String notes;
 
     public Record() {
+        this.id = -1L;
     }
 
-    public Record(Long id, Long vehID, Long ownerID, String name, Date date,
+    public Record(Long id, Long vehID, Long ownerID, String name, int date,
                   double miles, double cost, String location, String notes) {
         this.id = id;
         this.vehID = vehID;
@@ -66,11 +67,11 @@ public class Record {
         this.name = name;
     }
 
-    public Date getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(int date) {
         this.date = date;
     }
 

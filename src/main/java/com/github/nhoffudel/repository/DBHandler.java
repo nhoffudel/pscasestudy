@@ -15,9 +15,10 @@ public class DBHandler {
     public DBHandler() {
     }
 
-    public Object queryDB(String query) {
+    public ResultSet queryDB(String query) {
         List<Object> results = new ArrayList<Object>();
         Connection conn = null;
+        ResultSet rs;
         try {
             String url = "jdbc:sqlite:/Users/Nick/dev/pscasestudy/src/main/java/com/github/nhoffudel/PSVehDB.db";
             conn = DriverManager.getConnection(url);
@@ -25,10 +26,7 @@ public class DBHandler {
             Statement stmt = null;
             try {
                 stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-                for (Object i : rs){
-
-                }
+                rs = stmt.executeQuery(query);
             } catch (SQLException e) {
                 throw new Error("Error querying", e);
             } finally {
@@ -48,5 +46,6 @@ public class DBHandler {
                 System.out.println(ex.getMessage());
             }
         }
+        return rs;
     }
 }

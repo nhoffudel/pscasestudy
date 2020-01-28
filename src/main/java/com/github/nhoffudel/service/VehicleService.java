@@ -24,9 +24,8 @@ public class VehicleService {
     }
 
     public Vehicle read(Long id) {
-        Optional<Vehicle> potentialVehicle = handler.findById(id);
-        Vehicle vehicle = potentialVehicle.get();
-        return vehicle;
+        Vehicle potentialVehicle = handler.findById(id);
+        return potentialVehicle;
     }
 
     public Vehicle update(Long id, Vehicle vehicle) {
@@ -52,8 +51,6 @@ public class VehicleService {
     }
 
     public List<Vehicle> readAll() {
-        List<Vehicle> vehicleList = new ArrayList<>();
-        handler.findAll().forEach(vehicleList::add);
-        return vehicleList;
+        return handler.findAll();
     }
 }
