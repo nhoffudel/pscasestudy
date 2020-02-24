@@ -19,14 +19,6 @@ public class TripController {
         this.service = service;
     }
 
-//    @RequestMapping(value = "/create-default", method = RequestMethod.POST)
-//    public ResponseEntity<Trip> create() {
-//        Trip responseBody = service.create(new Trip(0L, "Leon", "Hunter"));
-//        ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        return responseEntity;
-//    }
-
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Trip> create(@RequestBody Trip trip) {
         Trip responseBody = service.create(trip);

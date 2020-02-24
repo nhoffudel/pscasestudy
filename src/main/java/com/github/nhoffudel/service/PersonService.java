@@ -1,55 +1,75 @@
 package com.github.nhoffudel.service;
 
+import com.github.nhoffudel.DatabaseConnection;
 import com.github.nhoffudel.model.Person;
-import com.github.nhoffudel.repository.PersonRepository;
-import com.github.nhoffudel.repository.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
-    private PersonRepository repository;
+    private final DatabaseConnection dbc;
 
-    @Autowired
-    public PersonService(PersonRepository repository) {
-        this.repository = repository;
+    public PersonService(DatabaseConnection dbc) {
+        this.dbc = dbc;
+    }
+
+    public PersonService() {
+        this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
     }
 
     public Person create(Person person) {
-        Person personCreated = repository.save(person);
-        return personCreated;
+        dbc.executeStatement("INSERT into Person(username, firstName, lastName) VALUES("
+                + person.getUsername()
+                + "', '" + person.getFirstName() + "';"
+                + "', '" + person.getLastName() + "';");
+        return read(person.getUsername());
     }
 
-    public Person read(Long id) {
-        Optional<Person> potentialPerson = repository.findById(id);
-        Person person = potentialPerson.get();
+    public Person read(String username) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Person where username = " + ";");
+        Person person = new Person();
+        try {
+            while (result.next()) {
+                person.setUsername(result.getString("userName"));
+                person.setFirstName(result.getString("firstName"));
+                person.setLastName(result.getString("lastName"));
+            }
+        } catch (SQLException se) {
+            throw new Error(se);
+        }
         return person;
     }
 
-    public Person update(Long id, Person person) {
-        Person personInDataBase = read(id);
-        String newFirstName = person.getFirstName();
-        String newLastName = person.getLastName();
-
-        personInDataBase.setFirstName(newFirstName);
-        personInDataBase.setLastName(newLastName);
-        repository.save(personInDataBase);
-        return personInDataBase;
+    public Person update(String username, Person person) {
+        dbc.executeStatement("UPDATE Person SET firstName = '" + person.getFirstName()
+                + "', lastName = '" + person.getLastName() + "' where userName = " + username + ";");
+        return read(person.getUsername());
     }
 
-    public Person delete(Long id) {
-        Person person = read(id);
-        repository.delete(person);
+    public Person delete(String username) {
+        Person person = read(username);
+        dbc.executeStatement("Delete FROM Person where username = '" + username + "';");
         return person;
     }
 
     public List<Person> readAll() {
-        List<Person> personList = new ArrayList<>();
-        repository.findAll().forEach(personList::add);
-        return personList;
+            ResultSet result = dbc.executeQuery("SELECT * FROM Person");
+            List<Person> list = new ArrayList<>();
+            try {
+                while (result.next()) {
+                    String username = result.getString("username");
+                    String firstName = result.getString("firstName");
+                    String lastName = result.getString("lastName");
+                    Person person = new Person(username, firstName, lastName);
+                    list.add(person);
+                }
+            } catch (SQLException se) {
+                throw new Error(se);
+            }
+            return list;
     }
 }

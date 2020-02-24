@@ -19,14 +19,6 @@ public class UserController {
         this.service = service;
     }
 
-//    @RequestMapping(value = "/create-default", method = RequestMethod.POST)
-//    public ResponseEntity<User> create() {
-//        User responseBody = service.create(new User(0L, "Leon", "Hunter"));
-//        ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        return responseEntity;
-//    }
-
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<User> create(@RequestBody User user) {
         User responseBody = service.create(user);
@@ -34,28 +26,26 @@ public class UserController {
         return responseEntity;
     }
 
-
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ResponseEntity<User> read(@PathVariable Long id) {
-        User responseBody = service.read(id);
+    public ResponseEntity<User> read(@PathVariable String username) {
+        User responseBody = service.read(username);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
-        User responseBody = service.update(id, user);
+    public ResponseEntity<User> update(@PathVariable String username, @RequestBody User user) {
+        User responseBody = service.update(username, user);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<User> delete(@PathVariable Long id) {
-        User responseBody = service.delete(id);
+    public ResponseEntity<User> delete(@PathVariable String username) {
+        User responseBody = service.delete(username);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
-
 
     @RequestMapping(value = "/read-all", method = RequestMethod.GET)
     public ResponseEntity<List<User>> readAll() {

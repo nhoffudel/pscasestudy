@@ -19,14 +19,6 @@ public class PersonController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/create-default", method = RequestMethod.POST)
-    public ResponseEntity<Person> create() {
-        Person responseBody = service.create(new Person(0L, "Leon", "Hunter"));
-        ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
-        return responseEntity;
-    }
-
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Person> create(@RequestBody Person person) {
         Person responseBody = service.create(person);
@@ -36,22 +28,22 @@ public class PersonController {
 
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ResponseEntity<Person> read(@PathVariable Long id) {
-        Person responseBody = service.read(id);
+    public ResponseEntity<Person> read(@PathVariable String username) {
+        Person responseBody = service.read(username);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<Person> update(@PathVariable Long id, @RequestBody Person person) {
-        Person responseBody = service.update(id, person);
+    public ResponseEntity<Person> update(@PathVariable String username, @RequestBody Person person) {
+        Person responseBody = service.update(username, person);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Person> delete(@PathVariable Long id) {
-        Person responseBody = service.delete(id);
+    public ResponseEntity<Person> delete(@PathVariable String username) {
+        Person responseBody = service.delete(username);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }

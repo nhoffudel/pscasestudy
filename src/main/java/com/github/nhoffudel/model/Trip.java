@@ -1,34 +1,36 @@
 package com.github.nhoffudel.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
-
+@Entity
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    Long ownerID;
-    Long vehID;
-    int datebegin;
-    int dateend;
-    String placebegin;
-    String placeend;
-    double milesbegin;
-    double milesend;
-    double fuelecon;
-    String notes;
+    private Long id;
+    private String owner;
+    private Long vehID;
+    private int datebegin;
+    private int dateend;
+    private String placebegin;
+    private String placeend;
+    private double milesbegin;
+    private double milesend;
+    private double cost;
+    private double fuelecon;
+    private String notes;
 
     public Trip() {
         this.id = -1L;
     }
 
-    public Trip(Long id, Long ownerID, Long vehID, int datebegin, int dateend,
+    public Trip(Long id, String owner, Long vehID, int datebegin, int dateend,
                 String placebegin, String placeend, double milesbegin, double milesend,
-                double fuelecon, String notes) {
+                double cost, double fuelecon, String notes) {
         this.id = id;
-        this.ownerID = ownerID;
+        this.owner = owner;
         this.vehID = vehID;
         this.datebegin = datebegin;
         this.dateend = dateend;
@@ -36,6 +38,7 @@ public class Trip {
         this.placeend = placeend;
         this.milesbegin = milesbegin;
         this.milesend = milesend;
+        this.cost = cost;
         this.fuelecon = fuelecon;
         this.notes = notes;
     }
@@ -48,12 +51,12 @@ public class Trip {
         this.id = id;
     }
 
-    public Long getOwnerID() {
-        return ownerID;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setOwnerID(Long ownerID) {
-        this.ownerID = ownerID;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Long getVehID() {
@@ -126,5 +129,14 @@ public class Trip {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

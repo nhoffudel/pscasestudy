@@ -19,14 +19,6 @@ public class RecordController {
         this.service = service;
     }
 
-//    @RequestMapping(value = "/create-default", method = RequestMethod.POST)
-//    public ResponseEntity<Record> create() {
-//        Record responseBody = service.create(new Record(0L, "Leon", "Hunter"));
-//        ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        return responseEntity;
-//    }
-
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Record> create(@RequestBody Record record) {
         Record responseBody = service.create(record);

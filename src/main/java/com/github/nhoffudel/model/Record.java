@@ -1,32 +1,31 @@
 package com.github.nhoffudel.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
-
+@Entity
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    Long vehID;
-    Long ownerID;
-    String name;
-    int date;
-    double miles;
-    double cost;
-    String location;
-    String notes;
+    private Long id;
+    private Long vehID;
+    private String owner;
+    private String name;
+    private int date;
+    private double miles;
+    private double cost;
+    private String location;
+    private String notes;
 
-    public Record() {
-        this.id = -1L;
-    }
+    public Record(){}
 
-    public Record(Long id, Long vehID, Long ownerID, String name, int date,
+    public Record(Long id, Long vehID, String owner, String name, int date,
                   double miles, double cost, String location, String notes) {
         this.id = id;
         this.vehID = vehID;
-        this.ownerID = ownerID;
+        this.owner = owner;
         this.name = name;
         this.date = date;
         this.miles = miles;
@@ -51,12 +50,12 @@ public class Record {
         this.vehID = vehID;
     }
 
-    public Long getOwnerID() {
-        return ownerID;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setOwnerID(Long ownerID) {
-        this.ownerID = ownerID;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getName() {

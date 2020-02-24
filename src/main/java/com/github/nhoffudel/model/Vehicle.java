@@ -5,27 +5,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String vin;
-    String name;
-    String make;
-    String model;
-    int year;
-    String color;
-    String engine;
-    String trim;
-    String notes;
-    Long ownerID;
+    private Long id;
+    private String vin;
+    private String name;
+    private String make;
+    private String model;
+    private int year;
+    private String color;
+    private String engine;
+    private String trim;
+    private String notes;
+    private String owner;
 
-    public Vehicle() {
-        this.id = -1L;
-    }
+    public Vehicle(){}
 
     public Vehicle(long id, String vin, String name, String make, String model, int year, String color,
-                   String engine, String trim, String notes, Long ownerID) {
+                   String engine, String trim, String notes, String owner) {
         this.id = id;
         this.vin = vin;
         this.name = name;
@@ -36,7 +35,7 @@ public class Vehicle {
         this.engine = engine;
         this.trim = trim;
         this.notes = notes;
-        this.ownerID = ownerID;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -119,11 +118,11 @@ public class Vehicle {
         this.notes = notes;
     }
 
-    public Long getOwnerID() {
-        return ownerID;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setOwnerID(Long ownerID) {
-        this.ownerID = ownerID;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

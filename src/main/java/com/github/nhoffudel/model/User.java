@@ -5,32 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String username;
-    String hashedpassword;
-    String securityquestion;
-    String hashedsecurityanswer;
+    private String username;
+    private String hashedpassword;
+    private String securityquestion;
+    private String hashedsecurityanswer;
 
     public User(){
     }
 
-    public User(long id, String username, String hashedpassword, String securityquestion, String hashedsecurityanswer){
-        this.id = id;
+    public User(String username, String hashedpassword, String securityquestion, String hashedsecurityanswer){
         this.username = username;
         this.hashedpassword = hashedpassword;
         this.securityquestion = securityquestion;
         this.hashedsecurityanswer = hashedsecurityanswer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
