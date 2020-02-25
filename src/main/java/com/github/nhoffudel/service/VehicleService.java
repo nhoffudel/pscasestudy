@@ -22,10 +22,9 @@ public class VehicleService {
     }
 
     public Vehicle create(Vehicle vehicle){
-        long newID = getMaxID() + 1;
-        dbc.executeStatement("INSERT into Vehicles(ID, VIN, name, make, model, year, " +
-                "color, engine, trim, notes, owner) VALUES(" + newID
-                + ", '" + vehicle.getVIN()
+        dbc.executeStatement("INSERT into Vehicles (VIN, name, make, model, year, " +
+                "color, engine, trim, notes, owner) VALUES ('"
+                + vehicle.getVIN()
                 + "', '" + vehicle.getName()
                 + "', '" + vehicle.getMake()
                 + "', '" + vehicle.getModel()
@@ -34,29 +33,65 @@ public class VehicleService {
                 + "', '" + vehicle.getEngine()
                 + "', '" + vehicle.getTrim()
                 + "', '" + vehicle.getNotes()
-                + "', '" + vehicle.getOwner() + "';");
-        return read(newID);
+                + "', '" + vehicle.getOwner() + "');");
+        return read(vehicle.getVIN());
     }
 
-    private long getMaxID() {
-        ResultSet result = dbc.executeQuery("SELECT MAX(id) as 'max' from Vehicles;");
-        long max = 0;
+    public Vehicle read(String vin) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Vehicles;");
+        Vehicle vehicle = new Vehicle();
         try {
             while (result.next()) {
-                max = result.getLong("max");
+                if (result.getString("VIN").equals(vin)) {
+                    vehicle.setVIN(result.getString("VIN"));
+                    vehicle.setName(result.getString("name"));
+                    vehicle.setMake(result.getString("make"));
+                    vehicle.setModel(result.getString("model"));
+                    vehicle.setYear(result.getInt("year"));
+                    vehicle.setColor(result.getString("color"));
+                    vehicle.setEngine(result.getString("engine"));
+                    vehicle.setTrim(result.getString("trim"));
+                    vehicle.setNotes(result.getString("notes"));
+                    vehicle.setOwner(result.getString("owner"));
+                    return vehicle;
+                }
             }
         } catch (SQLException se) {
             throw new Error(se);
         }
-        return max;
+        return vehicle;
     }
 
-    public Vehicle read(long id) {
-        ResultSet result = dbc.executeQuery("SELECT * FROM Vehicles where id = " + id + ";");
-        Vehicle vehicle = new Vehicle();
+    public Vehicle update(Vehicle vehicle) {
+        return update(vehicle.getVIN(), vehicle);
+    }
+
+    public Vehicle update(String VIN, Vehicle vehicle) {
+        dbc.executeStatement("UPDATE Vehicles Set name = '" + vehicle.getName()
+                + "', make = '" + vehicle.getMake()
+                + "', model = '" + vehicle.getModel()
+                + "', year = " + vehicle.getYear()
+                + ", color = '" + vehicle.getColor()
+                + "', engine = '" + vehicle.getEngine()
+                + "', trim = '" + vehicle.getTrim()
+                + "', notes = '" + vehicle.getNotes()
+                + "', owner = '" + vehicle.getOwner()
+                + "' where VIN = " + VIN + ";");
+        return read(vehicle.getVIN());
+    }
+
+    public Vehicle delete(String vin) {
+        Vehicle vehicle = read(vin);
+        dbc.executeStatement("Delete FROM Vehicles where VIN = " + vin + ";");
+        return vehicle;
+    }
+
+    public List<Vehicle> readAll() {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Vehicles");
+        List<Vehicle> list = new ArrayList<>();
         try {
             while (result.next()) {
-                vehicle.setId(id);
+                Vehicle vehicle = new Vehicle();
                 vehicle.setVIN(result.getString("VIN"));
                 vehicle.setName(result.getString("name"));
                 vehicle.setMake(result.getString("make"));
@@ -67,38 +102,20 @@ public class VehicleService {
                 vehicle.setTrim(result.getString("trim"));
                 vehicle.setNotes(result.getString("notes"));
                 vehicle.setOwner(result.getString("owner"));
+                list.add(vehicle);
             }
         } catch (SQLException se) {
             throw new Error(se);
         }
-        return vehicle;
+        return list;
     }
 
-    public Vehicle update(Vehicle vehicle) {
-        dbc.executeStatement("UPDATE Vehicles Set VIN = '" +  vehicle.getVIN()
-                + "', make = '" + vehicle.getMake()
-                + "', model = '" + vehicle.getModel()
-                + "', year = " + vehicle.getYear()
-                + ", color = '" + vehicle.getColor()
-                + "', engine = '" + vehicle.getEngine()
-                + "', trim = '" + vehicle.getTrim()
-                + "', notes = '" + vehicle.getNotes()
-                + "', owner = '" + vehicle.getOwner()
-                + "' where id = " + vehicle.getId() + ";");
-        return read(vehicle.getId());
-    }
-
-    public void delete(Long id) {
-        dbc.executeStatement("Delete FROM Vehicles where id = " + id + ";");
-    }
-
-    public List<Vehicle> readAll() {
-        ResultSet result = dbc.executeQuery("SELECT * FROM Vehicles");
+    public List<Vehicle> findByOwner(String username) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Vehicles where owner = '" + username + "';");
         List<Vehicle> list = new ArrayList<>();
         try {
             while (result.next()) {
                 Vehicle vehicle = new Vehicle();
-                vehicle.setId(result.getLong("id"));
                 vehicle.setVIN(result.getString("VIN"));
                 vehicle.setName(result.getString("name"));
                 vehicle.setMake(result.getString("make"));

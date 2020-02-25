@@ -23,16 +23,16 @@ public class RecordService {
 
     public Record create(Record record){
         long newID = getMaxID() + 1;
-        dbc.executeStatement("INSERT into Records(ID, vehicleID, owner, name, date, miles, cost, location, notes) " +
+        dbc.executeStatement("INSERT into Records(ID, vehicleVIN, owner, name, date, miles, cost, location, notes) " +
                 "VALUES(" + newID
-                + ", " + record.getVehID()
+                + ", " + record.getVehVIN()
                 + ", '" + record.getOwner()
                 + "', '" + record.getName()
                 + "', " + record.getDate()
                 + ", " + record.getMiles()
                 + ", " + record.getCost()
                 + ", '" + record.getLocation()
-                + "', '" + record.getNotes() + "';");
+                + "', '" + record.getNotes() + "');");
         return read(newID);
     }
 
@@ -55,7 +55,7 @@ public class RecordService {
         try {
             while (result.next()) {
                 record.setId(id);
-                record.setVehID(result.getLong("vehicleID"));
+                record.setVehVIN(result.getString("vehicleVIN"));
                 record.setOwner(result.getString("owner"));
                 record.setName(result.getString("name"));
                 record.setDate(result.getInt("date"));
@@ -71,7 +71,7 @@ public class RecordService {
     }
 
     public Record update(Long id, Record record) {
-        dbc.executeStatement("UPDATE Records Set vehicleID = " +  record.getVehID()
+        dbc.executeStatement("UPDATE Records Set vehicleVIN = " +  record.getVehVIN()
                 + ", owner = " + record.getOwner()
                 + ", name = '" + record.getName()
                 + "', date = " + record.getDate()
@@ -96,7 +96,30 @@ public class RecordService {
             while (result.next()) {
                 Record record = new Record();
                 record.setId(result.getLong("id"));
-                record.setVehID(result.getLong("vehicleID"));
+                record.setVehVIN(result.getString("vehicleVIN"));
+                record.setOwner(result.getString("owner"));
+                record.setName(result.getString("name"));
+                record.setDate(result.getInt("date"));
+                record.setMiles(result.getDouble("miles"));
+                record.setCost(result.getDouble("cost"));
+                record.setLocation(result.getString("location"));
+                record.setNotes(result.getString("notes"));
+                list.add(record);
+            }
+        } catch (SQLException se) {
+            throw new Error(se);
+        }
+        return list;
+    }
+
+    public List<Record> findByOwner(String username) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Records where owner = '" + username + "';");
+        List<Record> list = new ArrayList<>();
+        try {
+            while (result.next()) {
+                Record record = new Record();
+                record.setId(result.getLong("id"));
+                record.setVehVIN(result.getString("vehicleVIN"));
                 record.setOwner(result.getString("owner"));
                 record.setName(result.getString("name"));
                 record.setDate(result.getInt("date"));

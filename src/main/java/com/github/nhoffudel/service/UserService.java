@@ -23,23 +23,49 @@ public class UserService {
     }
 
     public User create(User user){    
-        dbc.executeStatement("INSERT into Users(username, hashedPassword, securityQuestion, hashedSecurityAnswer) " +
-                "VALUES(" + user.getUsername()
-                + "', '" + user.getHashedpassword() + "';"
-                + "', '" + user.getSecurityquestion() + "';"
-                + "', '" + user.getHashedsecurityanswer() + "';");
+        dbc.executeStatement("INSERT into Users (username, firstName, lastName, hashedPassword, securityQuestion, hashedSecurityAnswer) " +
+                "VALUES ('" + user.getUsername()
+                + "', '" + user.getFirstName()
+                + "', '" + user.getLastName()
+                + "', '" + user.getHashedPassword()
+                + "', '" + user.getSecurityQuestion()
+                + "', '" + user.getHashedSecurityAnswer() + "');");
         return read(user.getUsername());
     }
 
+//    public User read(String username) {
+//        ResultSet result = dbc.executeQuery("SELECT * FROM Users where username = '" + "';");
+//        User user = new User();
+//        try {
+//            while (result.next()) {
+//                user.setUsername(result.getString("username"));
+//                user.setFirstName(result.getString("firstName"));
+//                user.setLastName(result.getString("lastName"));
+//                user.setHashedPassword(result.getString("hashedPassword"));
+//                user.setSecurityQuestion(result.getString("securityQuestion"));
+//                user.setHashedSecurityAnswer(result.getString("hashedSecurityAnswer"));
+//                return user;
+//            }
+//        } catch (SQLException se) {
+//            throw new Error(se);
+//        }
+//        return user;
+//    }
+
     public User read(String username) {
-        ResultSet result = dbc.executeQuery("SELECT * FROM Users where username = " + ";");
+        ResultSet result = dbc.executeQuery("SELECT * FROM Users;");
         User user = new User();
         try {
             while (result.next()) {
-                user.setUsername(result.getString("username"));
-                user.setHashedpassword(result.getString("hashedPassword"));
-                user.setSecurityquestion(result.getString("securityQuestion"));
-                user.setHashedsecurityanswer(result.getString("hashedSecurityAnswer"));
+                if (result.getString("username").equals(username)) {
+                    user.setUsername(result.getString("username"));
+                    user.setFirstName(result.getString("firstName"));
+                    user.setLastName(result.getString("lastName"));
+                    user.setHashedPassword(result.getString("hashedPassword"));
+                    user.setSecurityQuestion(result.getString("securityQuestion"));
+                    user.setHashedSecurityAnswer(result.getString("hashedSecurityAnswer"));
+                    return user;
+                }
             }
         } catch (SQLException se) {
             throw new Error(se);
@@ -48,8 +74,10 @@ public class UserService {
     }
 
     public User update(String username, User user) {
-        dbc.executeStatement("UPDATE Users SET hashedPassword = '" + user.getHashedpassword()
-                + "' where userName = " + user.getUsername() + ";");
+        dbc.executeStatement("UPDATE Users SET hashedPassword = '" + user.getHashedPassword() +
+                "', firstName = '" + user.getFirstName() +
+                "', lastName = '" + user.getLastName() +
+                "' where userName = '" + user.getUsername() + "';");
         return read(user.getUsername());
     }
 
@@ -65,15 +93,41 @@ public class UserService {
         try {
             while (result.next()) {
                 String username = result.getString("username");
+                String firstName = result.getString("firstName");
+                String lastName = result.getString("lastName");
                 String hashedPassword = result.getString("hashedPassword");
                 String securityQuestion = result.getString("securityQuestion");
                 String hashedSecurityAnswer = result.getString("hashedSecurityAnswer");
-                User user = new User(username, hashedPassword, securityQuestion, hashedSecurityAnswer);
+                User user = new User(username, firstName, lastName, hashedPassword, securityQuestion, hashedSecurityAnswer);
                 list.add(user);
             }
         } catch (SQLException se) {
             throw new Error(se);
         }
         return list;
+    }
+
+    public Boolean validateUser(String userName, String userPassword) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Users where username = '" + userName + "';");
+        try {
+            while (result.next()) {
+                if (result.getString("hashedPassword").equals(userPassword)) return true;
+            }
+        } catch (SQLException se) {
+            throw new Error(se);
+        }
+        return false;
+    }
+
+    public boolean contains(String username){
+        List<User> list = readAll();
+        for (User u : list){
+            if (u.getUsername().equals(username)) return true;
+        }
+        return false;
+    }
+
+    public String hashPass(String password){
+        return password; //does nothing for testing purposes
     }
 }

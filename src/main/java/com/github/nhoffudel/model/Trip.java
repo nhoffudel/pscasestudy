@@ -11,7 +11,7 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String owner;
-    private Long vehID;
+    private String vehName;
     private int datebegin;
     private int dateend;
     private String placebegin;
@@ -26,12 +26,12 @@ public class Trip {
         this.id = -1L;
     }
 
-    public Trip(Long id, String owner, Long vehID, int datebegin, int dateend,
+    public Trip(Long id, String owner, String vehName, int datebegin, int dateend,
                 String placebegin, String placeend, double milesbegin, double milesend,
                 double cost, double fuelecon, String notes) {
         this.id = id;
         this.owner = owner;
-        this.vehID = vehID;
+        this.vehName = vehName;
         this.datebegin = datebegin;
         this.dateend = dateend;
         this.placebegin = placebegin;
@@ -57,14 +57,6 @@ public class Trip {
 
     public void setOwner(String owner) {
         this.owner = owner;
-    }
-
-    public Long getVehID() {
-        return vehID;
-    }
-
-    public void setVehID(Long vehID) {
-        this.vehID = vehID;
     }
 
     public int getDatebegin() {
@@ -131,12 +123,19 @@ public class Trip {
         this.notes = notes;
     }
 
-
     public double getCost() {
         return cost;
     }
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public String getVehName() {
+        return vehName;
+    }
+
+    public void setVehName(String name){
+        this.vehName = name;
     }
 }

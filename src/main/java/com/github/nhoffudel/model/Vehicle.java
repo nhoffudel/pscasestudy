@@ -8,8 +8,6 @@ import javax.persistence.Id;
 @Entity
 public class Vehicle {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String vin;
     private String name;
     private String make;
@@ -23,9 +21,8 @@ public class Vehicle {
 
     public Vehicle(){}
 
-    public Vehicle(long id, String vin, String name, String make, String model, int year, String color,
+    public Vehicle(String vin, String name, String make, String model, int year, String color,
                    String engine, String trim, String notes, String owner) {
-        this.id = id;
         this.vin = vin;
         this.name = name;
         this.make = make;
@@ -36,14 +33,6 @@ public class Vehicle {
         this.trim = trim;
         this.notes = notes;
         this.owner = owner;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getVIN() {

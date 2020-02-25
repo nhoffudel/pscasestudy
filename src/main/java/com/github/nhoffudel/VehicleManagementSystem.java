@@ -1,76 +1,82 @@
 package com.github.nhoffudel;
 
-import com.github.nhoffudel.dao.CourseDao;
-import com.github.nhoffudel.model.CourseInterface;
+import com.github.nhoffudel.model.User;
+import com.github.nhoffudel.pages.*;
+import com.github.nhoffudel.service.UserService;
 import com.github.nhoffudel.utils.IOConsole;
-import java.util.*;
 
 public class VehicleManagementSystem implements Runnable {
     private static final IOConsole console = new IOConsole();
 
     @Override
     public void run() {
-        CourseDao courseService = new CourseService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
-        List<Integer> listOfCoursesIds = ((CourseService) courseService).getAllCourseIDs();
-        while (true) {
-            String smsDashboardInput = getSchoolManagementSystemDashboardInput();
+        boolean running = true;
+        while (running) {
+            String smsDashboardInput = getVehicleManagementSystemDashboardInput();
             if ("login".equals(smsDashboardInput)) {
-                StudentService studentService = new StudentService();
-                String studentEmail = console.getStringInput("Enter your email:");
-                String studentPassword = console.getStringInput("Enter your password:");
-                Boolean isValidLogin = studentService.validateStudent(studentEmail, studentPassword);
+                UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+                String username = console.getStringInput("Enter your username:");
+                String userPassword = console.getStringInput("Enter your password:");
+                Boolean isValidLogin = userService.validateUser(username, userService.hashPass(userPassword));
                 if (isValidLogin) {
                     boolean loggedIn = true;
                     while (loggedIn) {
-                        String name = studentService.getStudentByEmail(studentEmail).getName();
-                        System.out.println(name + " is registered for these courses: ");
-                        List<CourseInterface> courses = studentService.getStudentCourses(studentEmail);
-                        for (CourseInterface c : courses)
-                            System.out.println("Course ID: " + c.getId() + " Course name: " + c.getName() + " Instructor: " + c.getInstructor());
-                        String studentDashboardInput = getStudentDashboardInput();
-                        if ("register".equals(studentDashboardInput)) {
-                            Integer courseId = getCourseRegistryInput();
-                            if (!listOfCoursesIds.contains(courseId))
-                                System.out.println(courseId + " is not a valid course ID");
-                            else if (!studentService.registeredOrNot(studentEmail, courseId))
-                                studentService.registerStudentToCourse(studentEmail, courseId);
-                            else System.out.println(name + " is already registered for that course");
+                        User user = userService.read(username);
+                        String name = user.getFirstName() + " " + user.getLastName();
+                        System.out.println("Welcome " + name);
+                        String userDashboardInput = getUserDashboardInput();
+                        if ("vehicles".equals(userDashboardInput)){
+                            VehiclePage vehiclePage = new VehiclePage(username);
+                            vehiclePage.run();
                         }
-                        else if ("logout".equals(studentDashboardInput)) loggedIn = false;
+                        else if ("trips".equals(userDashboardInput)){
+                            TripPage tripPage = new TripPage(username);
+                            tripPage.run();
+                        }
+                        else if ("records".equals(userDashboardInput)){
+                            RecordPage recordPage = new RecordPage(username);
+                            recordPage.run();
+                        }
+                        else if ("change password".equals(userDashboardInput)){
+                            UserPage userPage = new UserPage(username);
+                            userPage.changePassword();
+                        }
+                        else if ("change name".equals(userDashboardInput)){
+                            UserPage userPage = new UserPage(username);
+                            userPage.changeName();
+                        }
+                        else if ("logout".equals(userDashboardInput)) loggedIn = false;
                         else System.out.println("Invalid input");
                     }
-                    System.out.println("You are logged out");
-                } else System.out.println("Invalid login");
+                }
+                else System.out.println("Invalid login");
             }
-            else if ("logout".equals(smsDashboardInput)) System.out.println("You are not logged in");
+            else if ("register".equals(smsDashboardInput)){
+                UserPage userPage = new UserPage();
+                userPage.register();
+            }
+            else if ("forgot password".equals(smsDashboardInput)){
+                UserPage userPage = new UserPage();
+                userPage.forgotPassword();
+            }
+            else if ("quit".equals(smsDashboardInput)) {
+                System.out.println("Closing application");
+                running = false;
+            }
             else System.out.println("Invalid input");
         }
     }
 
-    private String getSchoolManagementSystemDashboardInput() {
-        return console.getStringInput(new StringBuilder()
-                .append("Welcome to the School Management System Dashboard!")
-                .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ login ], [ logout ]")
-                .toString());
+    private String getVehicleManagementSystemDashboardInput() {
+        return console.getStringInput("Welcome to the Vehicle Management System Dashboard!" +
+                "\nFrom here, you can select any of the following options:" +
+                "\n\t[ login ], [ forgot password ],  [ register ], [ quit ]");
     }
 
-    private String getStudentDashboardInput() {
-        return console.getStringInput(new StringBuilder()
-                .append("Welcome to the Student Dashboard!")
-                .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ register ], [ logout]")
-                .toString());
+    private String getUserDashboardInput() {
+        return console.getStringInput("Welcome to the main menu!" +
+                "\nFrom here, you can go to the following pages:" +
+                "\n\t[ vehicles ], [ trips ], [ records ], [ change password ], [ logout ]");
     }
 
-
-    private Integer getCourseRegistryInput() {
-        CourseDao courseService = new CourseService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
-        List<CourseInterface> courses = ((CourseService) courseService).getAllCourses();
-        StringBuilder prompt = new StringBuilder();
-        prompt.append("Welcome to the Course Registration Dashboard!")
-                .append("\nFrom here, enter the ID of any of the following options:");
-        for (CourseInterface c : courses) prompt.append("\n" + c.getId() + " - " + c.getName() + " Instructor: " + c.getInstructor());
-        return console.getIntegerInput(prompt.toString());
-    }
 }

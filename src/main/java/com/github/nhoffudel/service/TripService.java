@@ -21,12 +21,12 @@ public class TripService {
         this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
     }
 
-    public Trip create(Trip trip){
-        long newID = getMaxID() + 1;
-        dbc.executeStatement("INSERT into Trips(ID, vehicleID, owner, dateBegin, dateEnd, " +
-                "placeBegin, placeEnd, milesBegin, milesEnd, cost, fuelEcon, notes) VALUES(" + newID
-                + ", " + trip.getVehID()
-                + ", '" + trip.getOwner()
+    public Trip create(Trip trip) {
+        long newtripID = getMaxtripID() + 1;
+        dbc.executeStatement("INSERT into Trips (tripID, vehicleName, owner, dateBegin, dateEnd, " +
+                "placeBegin, placeEnd, milesBegin, milesEnd, cost, fuelEcon, notes) VALUES (" + newtripID
+                + ", '" + trip.getVehName()
+                + "', '" + trip.getOwner()
                 + "', " + trip.getDatebegin()
                 + ", " + trip.getDateend()
                 + ", '" + trip.getPlacebegin()
@@ -35,12 +35,12 @@ public class TripService {
                 + ", " + trip.getMilesend()
                 + ", " + trip.getCost()
                 + ", " + trip.getFuelecon()
-                + ", '" + trip.getNotes() + "';");
-        return read(newID);
+                + ", '" + trip.getNotes() + "');");
+        return read(newtripID);
     }
 
-    private long getMaxID() {
-        ResultSet result = dbc.executeQuery("SELECT MAX(id) as 'max' from Trips;");
+    private long getMaxtripID() {
+        ResultSet result = dbc.executeQuery("SELECT MAX(tripID) as 'max' from Trips;");
         long max = 0;
         try {
             while (result.next()) {
@@ -53,22 +53,25 @@ public class TripService {
     }
 
     public Trip read(long id) {
-        ResultSet result = dbc.executeQuery("SELECT * FROM Trips where id = " + id + ";");
+        ResultSet result = dbc.executeQuery("SELECT * FROM Trips;");
         Trip trip = new Trip();
         try {
             while (result.next()) {
-                trip.setId(id);
-                trip.setVehID(result.getLong("vehicleID"));
-                trip.setOwner(result.getString("owner"));
-                trip.setDatebegin(result.getInt("dateBegin"));
-                trip.setDateend(result.getInt("dateEnd"));
-                trip.setPlacebegin(result.getString("placeBegin"));
-                trip.setPlaceend(result.getString("placeEnd"));
-                trip.setMilesbegin(result.getDouble("milesBegin"));
-                trip.setMilesend(result.getDouble("milesEnd"));
-                trip.setCost(result.getDouble("cost"));
-                trip.setFuelecon(result.getDouble("fuelEcon"));
-                trip.setNotes(result.getString("notes"));
+                if (result.getLong("tripID") == id) {
+                    trip.setId(id);
+                    trip.setVehName(result.getString("vehicleName"));
+                    trip.setOwner(result.getString("owner"));
+                    trip.setDatebegin(result.getInt("dateBegin"));
+                    trip.setDateend(result.getInt("dateEnd"));
+                    trip.setPlacebegin(result.getString("placeBegin"));
+                    trip.setPlaceend(result.getString("placeEnd"));
+                    trip.setMilesbegin(result.getDouble("milesBegin"));
+                    trip.setMilesend(result.getDouble("milesEnd"));
+                    trip.setCost(result.getDouble("cost"));
+                    trip.setFuelecon(result.getDouble("fuelEcon"));
+                    trip.setNotes(result.getString("notes"));
+                    return trip;
+                }
             }
         } catch (SQLException se) {
             throw new Error(se);
@@ -77,8 +80,8 @@ public class TripService {
     }
 
     public Trip update(Long id, Trip trip) {
-        dbc.executeStatement("UPDATE Trips Set vehicleID = " +  trip.getVehID()
-                + ", owner = '" + trip.getOwner()
+        dbc.executeStatement("UPDATE Trips Set vehicleName = '" + trip.getVehName()
+                + "', owner = '" + trip.getOwner()
                 + "', dateBegin = " + trip.getDatebegin()
                 + ", dateEnd = " + trip.getDateend()
                 + ", placeBegin = '" + trip.getPlacebegin()
@@ -87,13 +90,13 @@ public class TripService {
                 + ", milesEnd = " + trip.getMilesend()
                 + ", cost = " + trip.getCost()
                 + ", notes = '" + trip.getNotes()
-                + "' where id = " + id + ";");
+                + "' where tripID = " + id + ";");
         return read(trip.getId());
     }
 
     public Trip delete(Long id) {
         Trip trip = read(id);
-        dbc.executeStatement("Delete FROM Trips where id = " + id + ";");
+        dbc.executeStatement("Delete FROM Trips where tripID = " + id + ";");
         return trip;
     }
 
@@ -103,8 +106,8 @@ public class TripService {
         try {
             while (result.next()) {
                 Trip trip = new Trip();
-                trip.setId(result.getLong("id"));
-                trip.setVehID(result.getLong("vehicleID"));
+                trip.setId(result.getLong("tripID"));
+                trip.setVehName(result.getString("vehicleVIN"));
                 trip.setOwner(result.getString("owner"));
                 trip.setDatebegin(result.getInt("dateBegin"));
                 trip.setDateend(result.getInt("dateEnd"));
@@ -116,6 +119,34 @@ public class TripService {
                 trip.setFuelecon(result.getDouble("fuelEcon"));
                 trip.setNotes(result.getString("notes"));
                 list.add(trip);
+            }
+        } catch (SQLException se) {
+            throw new Error(se);
+        }
+        return list;
+    }
+
+    public List<Trip> findByOwner(String username) {
+        ResultSet result = dbc.executeQuery("SELECT * FROM Trips;");
+        List<Trip> list = new ArrayList<>();
+        try {
+            while (result.next()) {
+                if (result.getString("owner").equals(username)) {
+                    Trip trip = new Trip();
+                    trip.setId(result.getLong("tripID"));
+                    trip.setVehName(result.getString("vehicleName"));
+                    trip.setOwner(result.getString("owner"));
+                    trip.setDatebegin(result.getInt("dateBegin"));
+                    trip.setDateend(result.getInt("dateEnd"));
+                    trip.setPlacebegin(result.getString("placeBegin"));
+                    trip.setPlaceend(result.getString("placeEnd"));
+                    trip.setMilesbegin(result.getDouble("milesBegin"));
+                    trip.setMilesend(result.getDouble("milesEnd"));
+                    trip.setCost(result.getDouble("cost"));
+                    trip.setFuelecon(result.getDouble("fuelEcon"));
+                    trip.setNotes(result.getString("notes"));
+                    list.add(trip);
+                }
             }
         } catch (SQLException se) {
             throw new Error(se);

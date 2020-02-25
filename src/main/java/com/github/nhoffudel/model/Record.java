@@ -10,7 +10,7 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long vehID;
+    private String vehVIN;
     private String owner;
     private String name;
     private int date;
@@ -21,10 +21,10 @@ public class Record {
 
     public Record(){}
 
-    public Record(Long id, Long vehID, String owner, String name, int date,
+    public Record(Long id, String vehVIN, String owner, String name, int date,
                   double miles, double cost, String location, String notes) {
         this.id = id;
-        this.vehID = vehID;
+        this.vehVIN = vehVIN;
         this.owner = owner;
         this.name = name;
         this.date = date;
@@ -42,12 +42,12 @@ public class Record {
         this.id = id;
     }
 
-    public Long getVehID() {
-        return vehID;
+    public String getVehVIN() {
+        return vehVIN;
     }
 
-    public void setVehID(Long vehID) {
-        this.vehID = vehID;
+    public void setVehVIN(String vehVIN) {
+        this.vehVIN = vehVIN;
     }
 
     public String getOwner() {

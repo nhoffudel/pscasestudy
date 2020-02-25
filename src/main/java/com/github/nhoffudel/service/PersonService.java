@@ -24,7 +24,7 @@ public class PersonService {
     public Person create(Person person) {
         dbc.executeStatement("INSERT into Person(username, firstName, lastName) VALUES("
                 + person.getUsername()
-                + "', '" + person.getFirstName() + "';"
+                + "', '" + person.getFirstName()
                 + "', '" + person.getLastName() + "';");
         return read(person.getUsername());
     }

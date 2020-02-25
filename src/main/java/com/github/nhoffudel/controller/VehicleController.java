@@ -36,22 +36,22 @@ public class VehicleController {
 
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ResponseEntity<Vehicle> read(@PathVariable Long id) {
-        Vehicle responseBody = service.read(id);
+    public ResponseEntity<Vehicle> read(@PathVariable String VIN) {
+        Vehicle responseBody = service.read(VIN);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-        Vehicle responseBody = service.update(id, vehicle);
+    public ResponseEntity<Vehicle> update(@PathVariable String VIN, @RequestBody Vehicle vehicle) {
+        Vehicle responseBody = service.update(VIN, vehicle);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Vehicle> delete(@PathVariable Long id) {
-        Vehicle responseBody = service.delete(id);
+    public ResponseEntity<Vehicle> delete(@PathVariable String VIN) {
+        Vehicle responseBody = service.delete(VIN);
         ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
         return responseEntity;
     }
