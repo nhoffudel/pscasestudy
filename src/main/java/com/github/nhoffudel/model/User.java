@@ -1,18 +1,22 @@
 package com.github.nhoffudel.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Users")
 public class User {
     @Id
+    @Column(name = "username")
     private String username;
+    @Column(name = "firstName")
     private String firstName;
+    @Column(name = "lastName")
     private String lastName;
+    @Column(name = "hashedPassword")
     private String hashedPassword;
+    @Column(name = "securityQuestion")
     private String securityQuestion;
+    @Column(name = "hashedSecurityAnswer")
     private String hashedSecurityAnswer;
 
     public User(){

@@ -31,12 +31,12 @@ public class RecordPage implements Runnable{
                 System.out.println("Record added");
             }
             else if ("edit record".equals(userInput)){
-                Long editID = console.getLongInput(new StringBuilder().append("Enter the ID of the record you want to edit").toString());
+                Long editID = console.getLongInput("Enter the ID of the record you want to edit");
                 editRecord(editID);
                 System.out.println("Record edited");
             }
             else if ("delete record".equals(userInput)){
-                Long editID = console.getLongInput(new StringBuilder().append("Enter the ID of the record you want to delete").toString());
+                Long editID = console.getLongInput("Enter the ID of the record you want to delete");
                 removeRecord(editID);
                 System.out.println("Record deleted");
             }
@@ -47,13 +47,13 @@ public class RecordPage implements Runnable{
 
     private Record getAddRecordInput() {
         Record newRecord = new Record();
-        newRecord.setVehVIN(console.getStringInput(new StringBuilder().append("Enter the VIN of the vehicle").toString()));
-        newRecord.setName(console.getStringInput(new StringBuilder().append("Enter the a name for this record").toString()));
-        newRecord.setDate(console.getIntegerInput(new StringBuilder().append("Enter the date").toString()));
-        newRecord.setMiles(console.getDoubleInput(new StringBuilder().append("Enter the miles").toString()));
-        newRecord.setCost(console.getDoubleInput(new StringBuilder().append("Enter the cost").toString()));
-        newRecord.setLocation(console.getStringInput(new StringBuilder().append("Enter the location").toString()));
-        newRecord.setNotes(console.getStringInput(new StringBuilder().append("Enter any notes").toString()));
+        newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle"));
+        newRecord.setName(console.getStringInput("Enter the a name for this record"));
+        newRecord.setDate(console.getIntegerInput("Enter the date in MMDDYY"));
+        newRecord.setMiles(console.getDoubleInput("Enter the miles"));
+        newRecord.setCost(console.getDoubleInput("Enter the cost"));
+        newRecord.setLocation(console.getStringInput("Enter the location"));
+        newRecord.setNotes(console.getStringInput("Enter any notes"));
         return newRecord;
     }
 
@@ -65,25 +65,25 @@ public class RecordPage implements Runnable{
                 "\n\t[ cost ], [ location ], [ notes ]");
         switch (thingToEdit) {
             case "vehicle":
-                newRecord.setVehVIN(console.getStringInput(new StringBuilder().append("Enter the VIN of the vehicle").toString()));
+                newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle"));
                 break;
             case "name":
-                newRecord.setName(console.getStringInput(new StringBuilder().append("Enter the a name for this record").toString()));
+                newRecord.setName(console.getStringInput("Enter the a name for this record"));
                 break;
             case "date":
-                newRecord.setDate(console.getIntegerInput(new StringBuilder().append("Enter the date").toString()));
+                newRecord.setDate(console.getIntegerInput("Enter the date in MMDDYY"));
                 break;
             case "miles":
-                newRecord.setMiles(console.getDoubleInput(new StringBuilder().append("Enter the miles").toString()));
+                newRecord.setMiles(console.getDoubleInput("Enter the miles"));
                 break;
             case "cost":
-                newRecord.setCost(console.getDoubleInput(new StringBuilder().append("Enter the cost").toString()));
+                newRecord.setCost(console.getDoubleInput("Enter the cost"));
                 break;
             case "location":
-                newRecord.setLocation(console.getStringInput(new StringBuilder().append("Enter the location").toString()));
+                newRecord.setLocation(console.getStringInput("Enter the location"));
                 break;
             case "notes":
-                newRecord.setNotes(console.getStringInput(new StringBuilder().append("Enter any notes").toString()));
+                newRecord.setNotes(console.getStringInput("Enter any notes"));
                 break;
             default:
                 System.out.println("Invalid input");
@@ -98,17 +98,20 @@ public class RecordPage implements Runnable{
 
     private void printRecords(List<Record> records){
         for (Record r : records) {
-            System.out.println("Record id: " + r.getId() + " Service/maintenance/mod name: " + r.getName());
-            System.out.println("Date: " + r.getDate() + " at " + r.getMiles() + " miles");
+            System.out.println("Record id: " + r.getId() + " Service name: " + r.getName());
+            System.out.println("Date: " + toDate(r.getDate()) + " at " + r.getMiles() + " miles");
             System.out.println("Performed at: " + r.getLocation() + " at cost: $" + r.getCost());
             System.out.println("Notes: " + r.getNotes());
         }
     }
 
+    private String toDate(int i){
+        String s = String.valueOf(i);
+        return s.substring(0,2) + "/" + s.substring(2,4) + "/" + s.substring(4);
+    }
+
     private String getRecordPageDashboardInput() {
-        return console.getStringInput(new StringBuilder()
-                .append("\nFrom here, you can do the following things:")
-                .append("\n\t[ add record ], [ edit record ], [ delete record ], [ main menu ]")
-                .toString());
+        return console.getStringInput("\nFrom here, you can do the following things:" +
+                "\n\t[ add record ], [ edit record ], [ delete record ], [ main menu ]");
     }
 }

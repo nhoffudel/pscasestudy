@@ -25,16 +25,16 @@ public class TripService {
         long newtripID = getMaxtripID() + 1;
         dbc.executeStatement("INSERT into Trips (tripID, vehicleName, owner, dateBegin, dateEnd, " +
                 "placeBegin, placeEnd, milesBegin, milesEnd, cost, fuelEcon, notes) VALUES (" + newtripID
-                + ", '" + trip.getVehName()
+                + ", '" + trip.getVehicleName()
                 + "', '" + trip.getOwner()
-                + "', " + trip.getDatebegin()
-                + ", " + trip.getDateend()
-                + ", '" + trip.getPlacebegin()
-                + "', '" + trip.getPlaceend()
-                + "', " + trip.getMilesbegin()
-                + ", " + trip.getMilesend()
+                + "', " + trip.getDateBegin()
+                + ", " + trip.getDateEnd()
+                + ", '" + trip.getPlaceBegin()
+                + "', '" + trip.getPlaceEnd()
+                + "', " + trip.getMilesBegin()
+                + ", " + trip.getMilesEnd()
                 + ", " + trip.getCost()
-                + ", " + trip.getFuelecon()
+                + ", " + trip.getFuelEcon()
                 + ", '" + trip.getNotes() + "');");
         return read(newtripID);
     }
@@ -59,16 +59,16 @@ public class TripService {
             while (result.next()) {
                 if (result.getLong("tripID") == id) {
                     trip.setId(id);
-                    trip.setVehName(result.getString("vehicleName"));
+                    trip.setVehicleName(result.getString("vehicleName"));
                     trip.setOwner(result.getString("owner"));
-                    trip.setDatebegin(result.getInt("dateBegin"));
-                    trip.setDateend(result.getInt("dateEnd"));
-                    trip.setPlacebegin(result.getString("placeBegin"));
-                    trip.setPlaceend(result.getString("placeEnd"));
-                    trip.setMilesbegin(result.getDouble("milesBegin"));
-                    trip.setMilesend(result.getDouble("milesEnd"));
+                    trip.setDateBegin(result.getInt("dateBegin"));
+                    trip.setDateEnd(result.getInt("dateEnd"));
+                    trip.setPlaceBegin(result.getString("placeBegin"));
+                    trip.setPlaceEnd(result.getString("placeEnd"));
+                    trip.setMilesBegin(result.getDouble("milesBegin"));
+                    trip.setMilesEnd(result.getDouble("milesEnd"));
                     trip.setCost(result.getDouble("cost"));
-                    trip.setFuelecon(result.getDouble("fuelEcon"));
+                    trip.setFuelEcon(result.getDouble("fuelEcon"));
                     trip.setNotes(result.getString("notes"));
                     return trip;
                 }
@@ -80,15 +80,16 @@ public class TripService {
     }
 
     public Trip update(Long id, Trip trip) {
-        dbc.executeStatement("UPDATE Trips Set vehicleName = '" + trip.getVehName()
+        dbc.executeStatement("UPDATE Trips Set vehicleName = '" + trip.getVehicleName()
                 + "', owner = '" + trip.getOwner()
-                + "', dateBegin = " + trip.getDatebegin()
-                + ", dateEnd = " + trip.getDateend()
-                + ", placeBegin = '" + trip.getPlacebegin()
-                + "', placeEnd = '" + trip.getPlaceend()
-                + "', milesBegin = " + trip.getMilesbegin()
-                + ", milesEnd = " + trip.getMilesend()
+                + "', dateBegin = " + trip.getDateBegin()
+                + ", dateEnd = " + trip.getDateEnd()
+                + ", placeBegin = '" + trip.getPlaceBegin()
+                + "', placeEnd = '" + trip.getPlaceEnd()
+                + "', milesBegin = " + trip.getMilesBegin()
+                + ", milesEnd = " + trip.getMilesEnd()
                 + ", cost = " + trip.getCost()
+                + ", fuelEcon = " + trip.getFuelEcon()
                 + ", notes = '" + trip.getNotes()
                 + "' where tripID = " + id + ";");
         return read(trip.getId());
@@ -107,16 +108,16 @@ public class TripService {
             while (result.next()) {
                 Trip trip = new Trip();
                 trip.setId(result.getLong("tripID"));
-                trip.setVehName(result.getString("vehicleVIN"));
+                trip.setVehicleName(result.getString("vehicleName"));
                 trip.setOwner(result.getString("owner"));
-                trip.setDatebegin(result.getInt("dateBegin"));
-                trip.setDateend(result.getInt("dateEnd"));
-                trip.setPlacebegin(result.getString("placeBegin"));
-                trip.setPlaceend(result.getString("placeEnd"));
-                trip.setMilesbegin(result.getDouble("milesBegin"));
-                trip.setMilesend(result.getDouble("milesEnd"));
+                trip.setDateBegin(result.getInt("dateBegin"));
+                trip.setDateEnd(result.getInt("dateEnd"));
+                trip.setPlaceBegin(result.getString("placeBegin"));
+                trip.setPlaceEnd(result.getString("placeEnd"));
+                trip.setMilesBegin(result.getDouble("milesBegin"));
+                trip.setMilesEnd(result.getDouble("milesEnd"));
                 trip.setCost(result.getDouble("cost"));
-                trip.setFuelecon(result.getDouble("fuelEcon"));
+                trip.setFuelEcon(result.getDouble("fuelEcon"));
                 trip.setNotes(result.getString("notes"));
                 list.add(trip);
             }
@@ -134,16 +135,16 @@ public class TripService {
                 if (result.getString("owner").equals(username)) {
                     Trip trip = new Trip();
                     trip.setId(result.getLong("tripID"));
-                    trip.setVehName(result.getString("vehicleName"));
+                    trip.setVehicleName(result.getString("vehicleName"));
                     trip.setOwner(result.getString("owner"));
-                    trip.setDatebegin(result.getInt("dateBegin"));
-                    trip.setDateend(result.getInt("dateEnd"));
-                    trip.setPlacebegin(result.getString("placeBegin"));
-                    trip.setPlaceend(result.getString("placeEnd"));
-                    trip.setMilesbegin(result.getDouble("milesBegin"));
-                    trip.setMilesend(result.getDouble("milesEnd"));
+                    trip.setDateBegin(result.getInt("dateBegin"));
+                    trip.setDateEnd(result.getInt("dateEnd"));
+                    trip.setPlaceBegin(result.getString("placeBegin"));
+                    trip.setPlaceEnd(result.getString("placeEnd"));
+                    trip.setMilesBegin(result.getDouble("milesBegin"));
+                    trip.setMilesEnd(result.getDouble("milesEnd"));
                     trip.setCost(result.getDouble("cost"));
-                    trip.setFuelecon(result.getDouble("fuelEcon"));
+                    trip.setFuelEcon(result.getDouble("fuelEcon"));
                     trip.setNotes(result.getString("notes"));
                     list.add(trip);
                 }

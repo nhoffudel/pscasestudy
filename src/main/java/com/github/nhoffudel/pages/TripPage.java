@@ -47,15 +47,15 @@ public class TripPage implements Runnable{
 
     private Trip getAddTripInput() {
         Trip newTrip = new Trip();
-        newTrip.setVehName(console.getStringInput("Enter the name of the vehicle used"));
-        newTrip.setDatebegin(console.getIntegerInput("Enter the date the trip started"));
-        newTrip.setDateend(console.getIntegerInput("Enter the date the trip ended"));
-        newTrip.setPlacebegin(console.getStringInput("Enter the place the trip started"));
-        newTrip.setPlaceend(console.getStringInput("Enter the place the trip ended"));
-        newTrip.setMilesbegin(console.getDoubleInput("Enter the mile reading when the trip started"));
-        newTrip.setMilesend(console.getDoubleInput("Enter the mile reading when the trip ended"));
+        newTrip.setVehicleName(console.getStringInput("Enter the name of the vehicle used"));
+        newTrip.setDateBegin(console.getIntegerInput("Enter the date the trip started in MMDDYY"));
+        newTrip.setDateEnd(console.getIntegerInput("Enter the date the trip ended in MMDDYY"));
+        newTrip.setPlaceBegin(console.getStringInput("Enter the place the trip started"));
+        newTrip.setPlaceEnd(console.getStringInput("Enter the place the trip ended"));
+        newTrip.setMilesBegin(console.getDoubleInput("Enter the mile reading when the trip started"));
+        newTrip.setMilesEnd(console.getDoubleInput("Enter the mile reading when the trip ended"));
         newTrip.setCost(console.getDoubleInput("Enter the cost of the trip"));
-        newTrip.setFuelecon(console.getDoubleInput("Enter the fuel economy of the trip"));
+        newTrip.setFuelEcon(console.getDoubleInput("Enter the fuel economy of the trip"));
         newTrip.setNotes(console.getStringInput("Enter any notes"));
         return newTrip;
     }
@@ -68,31 +68,31 @@ public class TripPage implements Runnable{
                 "\n\t[ miles begin ], [ miles end ], [ cost ], [ fuel economy ], [ notes ]");
         switch (thingToEdit) {
             case "vehicle":
-                newTrip.setVehName(console.getStringInput("Enter the name of the vehicle used"));
+                newTrip.setVehicleName(console.getStringInput("Enter the name of the vehicle used"));
                 break;
             case "date begin":
-                newTrip.setDatebegin(console.getIntegerInput("Enter the date the trip started"));
+                newTrip.setDateBegin(console.getIntegerInput("Enter the date the trip started in MMDDYY"));
                 break;
             case "date end":
-                newTrip.setDateend(console.getIntegerInput("Enter the date the trip ended"));
+                newTrip.setDateEnd(console.getIntegerInput("Enter the date the trip ended in MMDDYY"));
                 break;
             case "place begin":
-                newTrip.setPlacebegin(console.getStringInput("Enter the place the trip started"));
+                newTrip.setPlaceBegin(console.getStringInput("Enter the place the trip started"));
                 break;
             case "place end":
-                newTrip.setPlaceend(console.getStringInput("Enter the place the trip ended"));
+                newTrip.setPlaceEnd(console.getStringInput("Enter the place the trip ended"));
                 break;
             case "miles begin":
-                newTrip.setMilesbegin(console.getDoubleInput("Enter the miles reading when the trip started"));
+                newTrip.setMilesBegin(console.getDoubleInput("Enter the miles reading when the trip started"));
                 break;
             case "miles end":
-                newTrip.setMilesend(console.getDoubleInput("Enter the miles reading when the trip ended"));
+                newTrip.setMilesEnd(console.getDoubleInput("Enter the miles reading when the trip ended"));
                 break;
             case "cost":
                 newTrip.setCost(console.getDoubleInput("Enter the cost of the trip"));
                 break;
             case "fuel economy":
-                newTrip.setFuelecon(console.getDoubleInput("Enter the fuel economy of the trip"));
+                newTrip.setFuelEcon(console.getDoubleInput("Enter the fuel economy of the trip"));
                 break;
             case "notes":
                 newTrip.setNotes(console.getStringInput("Enter any notes"));
@@ -111,12 +111,17 @@ public class TripPage implements Runnable{
     private void printTrips(List<Trip> trips){
         for (Trip t : trips) {
             System.out.println("Trip id: " + t.getId());
-            System.out.println("Vehicle used: " + t.getVehName());
-            System.out.println("Trip began at " + t.getPlacebegin() + " on " + t.getDatebegin() + " at " + t.getMilesbegin() + " miles");
-            System.out.println("Trip ended at " + t.getPlaceend() + " on " + t.getDateend() + " at " + t.getMilesend() + " miles");
-            System.out.println("Fuel economy: " + t.getFuelecon() + " Cost: $" + t.getCost());
+            System.out.println("Vehicle used: " + t.getVehicleName());
+            System.out.println("Trip began at " + t.getPlaceBegin() + " on " + toDate(t.getDateBegin()) + " at " + t.getMilesBegin() + " miles");
+            System.out.println("Trip ended at " + t.getPlaceEnd() + " on " + toDate(t.getDateEnd()) + " at " + t.getMilesEnd() + " miles");
+            System.out.println("Fuel economy: " + t.getFuelEcon() + " Cost: $" + t.getCost());
             System.out.println("Notes: " + t.getNotes() + "\n");
         }
+    }
+
+    private String toDate(int i){
+        String s = String.valueOf(i);
+        return s.substring(0,2) + "/" + s.substring(2,4) + "/" + s.substring(4);
     }
 
     private String getTripPageDashboardInput() {

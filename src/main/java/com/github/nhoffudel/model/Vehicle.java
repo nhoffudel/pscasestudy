@@ -1,22 +1,30 @@
 package com.github.nhoffudel.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "vehicles")
 public class Vehicle {
     @Id
+    @Column(name = "VIN")
     private String vin;
+    @Column(name = "name")
     private String name;
+    @Column(name = "make")
     private String make;
+    @Column(name = "model")
     private String model;
+    @Column(name = "year")
     private int year;
+    @Column(name = "color")
     private String color;
+    @Column(name = "engine")
     private String engine;
+    @Column(name = "trim")
     private String trim;
+    @Column(name = "notes")
     private String notes;
+    @Column(name = "owner")
     private String owner;
 
     public Vehicle(){}

@@ -1,6 +1,6 @@
 package com.github.nhoffudel;
 
-public class MainApplication {
+public class ConsoleApplication {
     public static void main(String[] args) {
         JdbcConfigurator.initialize();
         Runnable sms = new VehicleManagementSystem();

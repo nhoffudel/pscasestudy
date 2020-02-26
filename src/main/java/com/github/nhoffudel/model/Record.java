@@ -1,30 +1,36 @@
 package com.github.nhoffudel.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 @Entity
+@Table(name = "Records")
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
-    private String vehVIN;
+    @Column(name = "vehicleVIN")
+    private String vehicleVIN;
+    @Column(name = "owner")
     private String owner;
+    @Column(name = "name")
     private String name;
+    @Column(name = "date")
     private int date;
+    @Column(name = "miles")
     private double miles;
+    @Column(name = "cost")
     private double cost;
+    @Column(name = "location")
     private String location;
+    @Column(name = "notes")
     private String notes;
 
     public Record(){}
 
-    public Record(Long id, String vehVIN, String owner, String name, int date,
+    public Record(Long id, String vehicleVIN, String owner, String name, int date,
                   double miles, double cost, String location, String notes) {
         this.id = id;
-        this.vehVIN = vehVIN;
+        this.vehicleVIN = vehicleVIN;
         this.owner = owner;
         this.name = name;
         this.date = date;
@@ -42,12 +48,12 @@ public class Record {
         this.id = id;
     }
 
-    public String getVehVIN() {
-        return vehVIN;
+    public String getVehicleVIN() {
+        return vehicleVIN;
     }
 
-    public void setVehVIN(String vehVIN) {
-        this.vehVIN = vehVIN;
+    public void setVehicleVIN(String vehicleVIN) {
+        this.vehicleVIN = vehicleVIN;
     }
 
     public String getOwner() {

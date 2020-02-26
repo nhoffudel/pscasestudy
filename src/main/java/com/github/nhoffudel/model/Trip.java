@@ -1,45 +1,54 @@
 package com.github.nhoffudel.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 @Entity
+@Table(name = "Trips")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tripID")
     private Long id;
+    @Column(name = "owner")
     private String owner;
-    private String vehName;
-    private int datebegin;
-    private int dateend;
-    private String placebegin;
-    private String placeend;
-    private double milesbegin;
-    private double milesend;
+    @Column(name = "vehicleName")
+    private String vehicleName;
+    @Column(name = "dateBegin")
+    private int dateBegin;
+    @Column(name = "dateEnd")
+    private int dateEnd;
+    @Column(name = "placeBegin")
+    private String placeBegin;
+    @Column(name = "placeEnd")
+    private String placeEnd;
+    @Column(name = "milesBegin")
+    private double milesBegin;
+    @Column(name = "milesEnd")
+    private double milesEnd;
+    @Column(name = "cost")
     private double cost;
-    private double fuelecon;
+    @Column(name = "fuelEcon")
+    private double fuelEcon;
+    @Column(name = "notes")
     private String notes;
 
     public Trip() {
         this.id = -1L;
     }
 
-    public Trip(Long id, String owner, String vehName, int datebegin, int dateend,
-                String placebegin, String placeend, double milesbegin, double milesend,
-                double cost, double fuelecon, String notes) {
+    public Trip(Long id, String owner, String vehicleName, int dateBegin, int dateEnd,
+                String placeBegin, String placeEnd, double milesBegin, double milesEnd,
+                double cost, double fuelEcon, String notes) {
         this.id = id;
         this.owner = owner;
-        this.vehName = vehName;
-        this.datebegin = datebegin;
-        this.dateend = dateend;
-        this.placebegin = placebegin;
-        this.placeend = placeend;
-        this.milesbegin = milesbegin;
-        this.milesend = milesend;
+        this.vehicleName = vehicleName;
+        this.dateBegin = dateBegin;
+        this.dateEnd = dateEnd;
+        this.placeBegin = placeBegin;
+        this.placeEnd = placeEnd;
+        this.milesBegin = milesBegin;
+        this.milesEnd = milesEnd;
         this.cost = cost;
-        this.fuelecon = fuelecon;
+        this.fuelEcon = fuelEcon;
         this.notes = notes;
     }
 
@@ -59,60 +68,60 @@ public class Trip {
         this.owner = owner;
     }
 
-    public int getDatebegin() {
-        return datebegin;
+    public int getDateBegin() {
+        return dateBegin;
     }
 
-    public void setDatebegin(int datebegin) {
-        this.datebegin = datebegin;
+    public void setDateBegin(int dateBegin) {
+        this.dateBegin = dateBegin;
     }
 
-    public int getDateend() {
-        return dateend;
+    public int getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDateend(int dateend) {
-        this.dateend = dateend;
+    public void setDateEnd(int dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public String getPlacebegin() {
-        return placebegin;
+    public String getPlaceBegin() {
+        return placeBegin;
     }
 
-    public void setPlacebegin(String placebegin) {
-        this.placebegin = placebegin;
+    public void setPlaceBegin(String placeBegin) {
+        this.placeBegin = placeBegin;
     }
 
-    public String getPlaceend() {
-        return placeend;
+    public String getPlaceEnd() {
+        return placeEnd;
     }
 
-    public void setPlaceend(String placeend) {
-        this.placeend = placeend;
+    public void setPlaceEnd(String placeEnd) {
+        this.placeEnd = placeEnd;
     }
 
-    public double getMilesbegin() {
-        return milesbegin;
+    public double getMilesBegin() {
+        return milesBegin;
     }
 
-    public void setMilesbegin(double milesbegin) {
-        this.milesbegin = milesbegin;
+    public void setMilesBegin(double milesBegin) {
+        this.milesBegin = milesBegin;
     }
 
-    public double getMilesend() {
-        return milesend;
+    public double getMilesEnd() {
+        return milesEnd;
     }
 
-    public void setMilesend(double milesend) {
-        this.milesend = milesend;
+    public void setMilesEnd(double milesEnd) {
+        this.milesEnd = milesEnd;
     }
 
-    public double getFuelecon() {
-        return fuelecon;
+    public double getFuelEcon() {
+        return fuelEcon;
     }
 
-    public void setFuelecon(double fuelecon) {
-        this.fuelecon = fuelecon;
+    public void setFuelEcon(double fuelEcon) {
+        this.fuelEcon = fuelEcon;
     }
 
     public String getNotes() {
@@ -131,11 +140,11 @@ public class Trip {
         this.cost = cost;
     }
 
-    public String getVehName() {
-        return vehName;
+    public String getVehicleName() {
+        return vehicleName;
     }
 
-    public void setVehName(String name){
-        this.vehName = name;
+    public void setVehicleName(String vehicleName){
+        this.vehicleName = vehicleName;
     }
 }
