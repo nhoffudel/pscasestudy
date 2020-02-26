@@ -16,54 +16,47 @@ public class VehicleManagementSystem implements Runnable {
             if ("login".equals(smsDashboardInput)) {
                 UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
                 String username = console.getStringInput("Enter your username:");
-                String userPassword = console.getStringInput("Enter your password:");
-                Boolean isValidLogin = userService.validateUser(username, userService.hashPass(userPassword));
-                if (isValidLogin) {
-                    boolean loggedIn = true;
-                    while (loggedIn) {
-                        User user = userService.read(username);
-                        String name = user.getFirstName() + " " + user.getLastName();
-                        System.out.println("Welcome " + name);
-                        String userDashboardInput = getUserDashboardInput();
-                        if ("vehicles".equals(userDashboardInput)){
-                            VehiclePage vehiclePage = new VehiclePage(username);
-                            vehiclePage.run();
+                if (!userService.contains(username)) System.out.println("User not found");
+                else {
+                    String userPassword = console.getStringInput("Enter your password:");
+                    Boolean isValidLogin = userService.validateUser(username, userService.hashPass(userPassword));
+                    if (isValidLogin) {
+                        boolean loggedIn = true;
+                        while (loggedIn) {
+                            User user = userService.read(username);
+                            System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName());
+                            String userDashboardInput = getUserDashboardInput();
+                            if ("vehicles".equals(userDashboardInput)) {
+                                VehiclePage vehiclePage = new VehiclePage(username);
+                                vehiclePage.run();
+                            } else if ("trips".equals(userDashboardInput)) {
+                                TripPage tripPage = new TripPage(username);
+                                tripPage.run();
+                            } else if ("records".equals(userDashboardInput)) {
+                                RecordPage recordPage = new RecordPage(username);
+                                recordPage.run();
+                            } else if ("change password".equals(userDashboardInput)) {
+                                UserPage userPage = new UserPage(username);
+                                userPage.changePassword();
+                            } else if ("change name".equals(userDashboardInput)) {
+                                UserPage userPage = new UserPage(username);
+                                userPage.changeName();
+                            } else if ("logout".equals(userDashboardInput)) loggedIn = false;
+                            else System.out.println("Invalid input");
                         }
-                        else if ("trips".equals(userDashboardInput)){
-                            TripPage tripPage = new TripPage(username);
-                            tripPage.run();
-                        }
-                        else if ("records".equals(userDashboardInput)){
-                            RecordPage recordPage = new RecordPage(username);
-                            recordPage.run();
-                        }
-                        else if ("change password".equals(userDashboardInput)){
-                            UserPage userPage = new UserPage(username);
-                            userPage.changePassword();
-                        }
-                        else if ("change name".equals(userDashboardInput)){
-                            UserPage userPage = new UserPage(username);
-                            userPage.changeName();
-                        }
-                        else if ("logout".equals(userDashboardInput)) loggedIn = false;
-                        else System.out.println("Invalid input");
                     }
+                    else System.out.println("Invalid login");
                 }
-                else System.out.println("Invalid login");
-            }
-            else if ("register".equals(smsDashboardInput)){
+            } else if ("register".equals(smsDashboardInput)) {
                 UserPage userPage = new UserPage();
                 userPage.register();
-            }
-            else if ("forgot password".equals(smsDashboardInput)){
+            } else if ("forgot password".equals(smsDashboardInput)) {
                 UserPage userPage = new UserPage();
                 userPage.forgotPassword();
-            }
-            else if ("quit".equals(smsDashboardInput)) {
+            } else if ("quit".equals(smsDashboardInput)) {
                 System.out.println("Closing application");
                 running = false;
-            }
-            else System.out.println("Invalid input");
+            } else System.out.println("Invalid input");
         }
     }
 

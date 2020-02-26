@@ -50,11 +50,11 @@ public class UserPage {
             newUser.setUsername(username);
             newUser.setFirstName(console.getStringInput("Enter your first name"));
             newUser.setLastName(console.getStringInput("Enter your last name"));
-            newUser.setSecurityQuestion(console.getStringInput("Enter a security question"));
-            newUser.setHashedSecurityAnswer(userService.hashPass(console.getStringInput(
-                    "Enter the security question answer")));
             String newPass1 = console.getStringInput("Enter a password");
             String newPass2 = console.getStringInput("Confirm password");
+            newUser.setSecurityQuestion(console.getStringInput("Enter a security question"));
+            newUser.setHashedSecurityAnswer(userService.hashPass(console.getStringInput(
+                    "Enter the security question's answer")));
             if (newPass1.equals(newPass2)) {
                 newUser.setHashedPassword(newPass1);
                 userService.create(newUser);

@@ -31,17 +31,17 @@ public class VehiclePage implements Runnable{
                 else System.out.println("Vehicle already exists in database");
             }
             else if ("edit vehicle".equals(userInput)){
-                String editVin = console.getStringInput("Enter the VIN of the vehicle you want to change");
+                String editVin = console.getStringInput("Enter the VIN of the vehicle you want to edit");
                 editVehicle(editVin);
                 System.out.println("Vehicle edited");
             }
             else if ("delete vehicle".equals(userInput)){
-                String editVin = console.getStringInput("Enter the VIN of the vehicle you want to remove");
+                String editVin = console.getStringInput("Enter the VIN of the vehicle you want to delete");
                 deleteVehicle(editVin);
                 System.out.println("Vehicle deleted");
             }
             else if ("main menu".equals(userInput)) running = false;
-            else System.out.println("invalid input");
+            else System.out.println("Invalid input");
         }
     }
 
@@ -91,7 +91,7 @@ public class VehiclePage implements Runnable{
                 newVehicle.setNotes(console.getStringInput("Enter any new notes"));
                 break;
             default:
-                System.out.println("invalid input");
+                System.out.println("Invalid input");
         }
         vehicleService.update(newVehicle);
     }

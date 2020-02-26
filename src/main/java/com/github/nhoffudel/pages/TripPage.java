@@ -31,17 +31,17 @@ public class TripPage implements Runnable{
                 System.out.println("Trip added");
             }
             else if ("edit trip".equals(userInput)){
-                Long editID = console.getLongInput("Enter the ID of the trip you want to change");
+                Long editID = console.getLongInput("Enter the ID of the trip you want to edit");
                 editTrip(editID);
                 System.out.println("Trip edited");
             }
             else if ("delete trip".equals(userInput)){
-                Long editID = console.getLongInput("Enter the ID of the trip you want to remove");
+                Long editID = console.getLongInput("Enter the ID of the trip you want to delete");
                 removeTrip(editID);
                 System.out.println("Trip deleted");
             }
             else if ("main menu".equals(userInput)) running = false;
-            else System.out.println("invalid input");
+            else System.out.println("Invalid input");
         }
     }
 
@@ -52,8 +52,8 @@ public class TripPage implements Runnable{
         newTrip.setDateend(console.getIntegerInput("Enter the date the trip ended"));
         newTrip.setPlacebegin(console.getStringInput("Enter the place the trip started"));
         newTrip.setPlaceend(console.getStringInput("Enter the place the trip ended"));
-        newTrip.setMilesbegin(console.getDoubleInput("Enter the miles reading when the trip started"));
-        newTrip.setMilesend(console.getDoubleInput("Enter the miles reading when the trip ended"));
+        newTrip.setMilesbegin(console.getDoubleInput("Enter the mile reading when the trip started"));
+        newTrip.setMilesend(console.getDoubleInput("Enter the mile reading when the trip ended"));
         newTrip.setCost(console.getDoubleInput("Enter the cost of the trip"));
         newTrip.setFuelecon(console.getDoubleInput("Enter the fuel economy of the trip"));
         newTrip.setNotes(console.getStringInput("Enter any notes"));
@@ -98,7 +98,7 @@ public class TripPage implements Runnable{
                 newTrip.setNotes(console.getStringInput("Enter any notes"));
                 break;
             default:
-                System.out.println("invalid input");
+                System.out.println("Invalid input");
         }
         tripService.update(editID, newTrip);
     }
