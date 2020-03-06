@@ -26,6 +26,13 @@ public class UserController {
         return responseEntity;
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User responseBody = service.login(user);
+        ResponseEntity responseEntity = new ResponseEntity<>(responseBody, HttpStatus.OK);
+        return responseEntity;
+    }
+
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public ResponseEntity<User> read(@PathVariable String username) {
         User responseBody = service.read(username);

@@ -1,1 +1,0 @@
-CREATE TABLE if not exists management_system.Student(email VARCHAR(50) not null primary key, name VARCHAR(50) not null, password VARCHAR(50) not null);

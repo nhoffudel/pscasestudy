@@ -2,6 +2,7 @@ package com.github.nhoffudel;
 
 import com.github.nhoffudel.utils.DirectoryReference;
 import com.github.nhoffudel.utils.FileReader;
+import com.github.nhoffudel.utils.IOConsole;
 import org.mariadb.jdbc.Driver;
 
 import java.io.File;
@@ -21,7 +22,17 @@ public class JdbcConfigurator {
     private static final DatabaseConnection dbc = DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM;
 
     public static void initialize() {
+//        if (getOverwriteInput().equals("yes")){
+//            createTable("vehicle_management_system_create.sql");
+//        }
         dbc.use();
+    }
+
+    private static String getOverwriteInput() {
+        IOConsole console = new IOConsole();
+        return console.getStringInput("Do you want to delete the existing database and create a new one?" +
+                "\nType yes to delete and create a new one. Warning! All data will be deleted!" +
+                "\nType no to use existing database and data.");
     }
 
     private static void createTable(String fileName) {

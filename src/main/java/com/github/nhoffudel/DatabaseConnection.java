@@ -7,13 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Created by leon on 2/18/2020.
- */
 public enum DatabaseConnection {
     VEHICLE_MANAGEMENT_SYSTEM(new ConnectionBuilder()
             .setUser("root")
-            .setPassword("toor") //necessary to run on my machine
+            .setPassword("toor") //necessary to run on my machine, change to suit yours
             .setPort(3306)
             .setDatabaseVendor("mariadb")
             .setHost("127.0.0.1"));

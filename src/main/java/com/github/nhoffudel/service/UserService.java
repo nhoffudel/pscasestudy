@@ -119,6 +119,15 @@ public class UserService {
         return false;
     }
 
+    public User login(User user) {
+        List<User> list = readAll();
+        for (User u : list){
+            if (u.getUsername().equals(user.getUsername()) &&
+                    u.getHashedPassword().equals(user.getHashedPassword())) return u;
+        }
+        return null;
+    }
+
     public boolean contains(String username){
         List<User> list = readAll();
         for (User u : list){
