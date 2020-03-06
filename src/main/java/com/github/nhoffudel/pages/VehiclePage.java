@@ -1,6 +1,6 @@
 package com.github.nhoffudel.pages;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.Vehicle;
 import com.github.nhoffudel.service.VehicleService;
 import com.github.nhoffudel.utils.IOConsole;
@@ -18,7 +18,7 @@ public class VehiclePage implements Runnable{
     @Override
     public void run() {
         boolean running = true;
-        VehicleService vehicleService = new VehicleService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        VehicleService vehicleService = new VehicleService(SQLiteDBConnection.VMS_VEHICLES);
         while (running){
             System.out.println("Welcome to the vehicle page! You own:");
             List<Vehicle> vehicles = vehicleService.findByOwner(username);
@@ -47,27 +47,27 @@ public class VehiclePage implements Runnable{
 
     private Vehicle getAddVehicleInput() {
         Vehicle newVehicle = new Vehicle();
-        newVehicle.setVIN(console.getStringInput("Enter the VIN"));
-        newVehicle.setName(console.getStringInput("Enter a name for this vehicle"));
+        newVehicle.setVIN(console.getStringInput("Enter the VIN").replaceAll("'", "`"));
+        newVehicle.setName(console.getStringInput("Enter a name for this vehicle").replaceAll("'", "`"));
         newVehicle.setYear(console.getIntegerInput("Enter the year"));
         newVehicle.setMake(console.getStringInput("Enter the make"));
         newVehicle.setModel(console.getStringInput("Enter the model"));
         newVehicle.setTrim(console.getStringInput("Enter the trim level"));
         newVehicle.setEngine(console.getStringInput("Enter the engine"));
         newVehicle.setColor(console.getStringInput("Enter the color"));
-        newVehicle.setNotes(console.getStringInput("Enter any notes"));
+        newVehicle.setNotes(console.getStringInput("Enter any notes").replaceAll("'", "`"));
         return newVehicle;
     }
 
     private void editVehicle(String editVin) {
-        VehicleService vehicleService = new VehicleService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        VehicleService vehicleService = new VehicleService(SQLiteDBConnection.VMS_VEHICLES);
         Vehicle newVehicle = vehicleService.read(editVin);
         String thingToEdit = console.getStringInput("What do you want to edit?" +
                 "\n\t[ name ], [ year ], [ make ], [ model ], " +
                 "\n\t[ trim ], [ color ], [ engine ], [ notes ]");
         switch (thingToEdit) {
             case "name":
-                newVehicle.setName(console.getStringInput("Enter a new name for this vehicle"));
+                newVehicle.setName(console.getStringInput("Enter a new name for this vehicle").replaceAll("'", "`"));
                 break;
             case "year":
                 newVehicle.setYear(console.getIntegerInput("Enter the new year"));
@@ -88,7 +88,7 @@ public class VehiclePage implements Runnable{
                 newVehicle.setEngine(console.getStringInput("Enter the new engine"));
                 break;
             case "notes":
-                newVehicle.setNotes(console.getStringInput("Enter any new notes"));
+                newVehicle.setNotes(console.getStringInput("Enter any new notes").replaceAll("'", "`"));
                 break;
             default:
                 System.out.println("Invalid input");
@@ -97,7 +97,7 @@ public class VehiclePage implements Runnable{
     }
 
     private void deleteVehicle(String editVin) {
-        VehicleService vehicleService = new VehicleService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        VehicleService vehicleService = new VehicleService(SQLiteDBConnection.VMS_VEHICLES);
         vehicleService.delete(editVin);
     }
 

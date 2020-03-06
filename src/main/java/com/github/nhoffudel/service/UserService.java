@@ -1,6 +1,6 @@
 package com.github.nhoffudel.service;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,14 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final DatabaseConnection dbc;
+    private final SQLiteDBConnection dbc;
 
-    public UserService(DatabaseConnection dbc) {
+    public UserService(SQLiteDBConnection dbc) {
         this.dbc = dbc;
     }
 
     public UserService() {
-        this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        this(SQLiteDBConnection.VMS_USERS);
     }
 
     public User create(User user){    

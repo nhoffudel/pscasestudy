@@ -62,6 +62,15 @@ public class ConnectionBuilder {
         }
     }
 
+    public Connection build(String url){
+        try {
+            DriverManager.registerDriver(new org.sqlite.JDBC());
+            return DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            String errorMessage = String.format("Failed to connect to `%s`", url);
+            throw new Error(errorMessage, e);
+        }
+    }
 
     public String toString() {
         Boolean isHostNull = this.hostName == null;

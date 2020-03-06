@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public enum DatabaseConnection {
-    VEHICLE_MANAGEMENT_SYSTEM(new ConnectionBuilder()
-            .setUser("root")
-            .setPassword("toor") //necessary to run on my machine, change to suit yours
-            .setPort(3306)
-            .setDatabaseVendor("mariadb")
-            .setHost("127.0.0.1"));
+//    VEHICLE_MANAGEMENT_SYSTEM(new ConnectionBuilder()
+//            .setUser("root")
+//            .setPassword("toor") //necessary to run on my machine, change to suit yours
+//            .setPort(3306)
+//            .setDatabaseVendor("mariadb")
+//            .setHost("127.0.0.1"));
+        VEHICLE_MANAGEMENT_SYSTEM(new ConnectionBuilder());
 
     private final ConnectionBuilder connectionBuilder;
 
@@ -24,7 +25,8 @@ public enum DatabaseConnection {
     public Connection getDatabaseConnection() {
         return connectionBuilder
                 .setDatabaseName(name().toLowerCase())
-                .build();
+//                .build();
+                .build("jdbc:sqlite:./src/main/resources/vehicle_management_system.db");
     }
 
     public Connection getDatabaseEngineConnection() {

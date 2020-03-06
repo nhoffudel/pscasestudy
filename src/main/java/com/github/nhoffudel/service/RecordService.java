@@ -1,6 +1,6 @@
 package com.github.nhoffudel.service;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.Record;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +11,14 @@ import java.util.List;
 
 @Service
 public class RecordService {
-    private final DatabaseConnection dbc;
+    private final SQLiteDBConnection dbc;
 
-    public RecordService(DatabaseConnection dbc) {
+    public RecordService(SQLiteDBConnection dbc) {
         this.dbc = dbc;
     }
 
     public RecordService() {
-        this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        this(SQLiteDBConnection.VMS_RECORDS);
     }
 
     public Record create(Record record){

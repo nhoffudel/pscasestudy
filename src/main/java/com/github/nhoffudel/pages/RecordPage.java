@@ -1,6 +1,6 @@
 package com.github.nhoffudel.pages;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.Record;
 import com.github.nhoffudel.service.RecordService;
 import com.github.nhoffudel.utils.IOConsole;
@@ -18,7 +18,7 @@ public class RecordPage implements Runnable{
     @Override
     public void run() {
         boolean running = true;
-        RecordService recordService = new RecordService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        RecordService recordService = new RecordService(SQLiteDBConnection.VMS_RECORDS);
         while (running){
             System.out.println("Welcome to the service record page! Your records:");
             List<Record> records = recordService.findByOwner(username);
@@ -47,28 +47,28 @@ public class RecordPage implements Runnable{
 
     private Record getAddRecordInput() {
         Record newRecord = new Record();
-        newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle"));
-        newRecord.setName(console.getStringInput("Enter the a name for this record"));
+        newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle").replaceAll("'", "`"));
+        newRecord.setName(console.getStringInput("Enter the a name for this record").replaceAll("'", "`"));
         newRecord.setDate(console.getIntegerInput("Enter the date in MMDDYY"));
         newRecord.setMiles(console.getDoubleInput("Enter the miles"));
         newRecord.setCost(console.getDoubleInput("Enter the cost"));
-        newRecord.setLocation(console.getStringInput("Enter the location"));
-        newRecord.setNotes(console.getStringInput("Enter any notes"));
+        newRecord.setLocation(console.getStringInput("Enter the location").replaceAll("'", "`"));
+        newRecord.setNotes(console.getStringInput("Enter any notes").replaceAll("'", "`"));
         return newRecord;
     }
 
     private void editRecord(Long editID) {
-        RecordService recordService = new RecordService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        RecordService recordService = new RecordService(SQLiteDBConnection.VMS_RECORDS);
         Record newRecord = recordService.read(editID);
         String thingToEdit = console.getStringInput("What do you want to edit?" +
                 "\n\t[ vehicle ], [ name ], [ date ], [ miles ] " +
                 "\n\t[ cost ], [ location ], [ notes ]");
         switch (thingToEdit) {
             case "vehicle":
-                newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle"));
+                newRecord.setVehicleVIN(console.getStringInput("Enter the VIN of the vehicle").replaceAll("'", "`"));
                 break;
             case "name":
-                newRecord.setName(console.getStringInput("Enter the a name for this record"));
+                newRecord.setName(console.getStringInput("Enter the a name for this record").replaceAll("'", "`"));
                 break;
             case "date":
                 newRecord.setDate(console.getIntegerInput("Enter the date in MMDDYY"));
@@ -80,10 +80,10 @@ public class RecordPage implements Runnable{
                 newRecord.setCost(console.getDoubleInput("Enter the cost"));
                 break;
             case "location":
-                newRecord.setLocation(console.getStringInput("Enter the location"));
+                newRecord.setLocation(console.getStringInput("Enter the location").replaceAll("'", "`"));
                 break;
             case "notes":
-                newRecord.setNotes(console.getStringInput("Enter any notes"));
+                newRecord.setNotes(console.getStringInput("Enter any notes").replaceAll("'", "`"));
                 break;
             default:
                 System.out.println("Invalid input");
@@ -92,7 +92,7 @@ public class RecordPage implements Runnable{
     }
 
     private void removeRecord(long id) {
-        RecordService recordService = new RecordService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        RecordService recordService = new RecordService(SQLiteDBConnection.VMS_RECORDS);
         recordService.delete(id);
     }
 
@@ -107,6 +107,7 @@ public class RecordPage implements Runnable{
 
     private String toDate(int i){
         String s = String.valueOf(i);
+        if (s.length() == 5) s = "0" + s;
         return s.substring(0,2) + "/" + s.substring(2,4) + "/" + s.substring(4);
     }
 

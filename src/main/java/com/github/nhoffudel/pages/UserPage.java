@@ -1,6 +1,6 @@
 package com.github.nhoffudel.pages;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.User;
 import com.github.nhoffudel.service.UserService;
 import com.github.nhoffudel.utils.IOConsole;
@@ -17,7 +17,7 @@ public class UserPage {
     }
 
     public void changePassword() {
-        UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
         User newUser = userService.read(username);
         String oldPass = console.getStringInput("Enter your old password");
         if (userService.validateUser(username, userService.hashPass(oldPass))) {
@@ -34,7 +34,7 @@ public class UserPage {
     }
 
     public void changeName() {
-        UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
         User newUser = userService.read(username);
         newUser.setFirstName(console.getStringInput("Enter your new first name"));
         newUser.setLastName(console.getStringInput("Enter your new first name"));
@@ -43,7 +43,7 @@ public class UserPage {
     }
 
     public void register() {
-        UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
         User newUser = new User();
         String username = console.getStringInput("Enter a username");
         if (!userService.contains(username)) {
@@ -52,9 +52,9 @@ public class UserPage {
             newUser.setLastName(console.getStringInput("Enter your last name"));
             String newPass1 = console.getStringInput("Enter a password");
             String newPass2 = console.getStringInput("Confirm password");
-            newUser.setSecurityQuestion(console.getStringInput("Enter a security question"));
+            newUser.setSecurityQuestion(console.getStringInput("Enter a security question").replaceAll("'", "`"));
             newUser.setHashedSecurityAnswer(userService.hashPass(console.getStringInput(
-                    "Enter the security question's answer")));
+                    "Enter the security question's answer")).replaceAll("'", "`"));
             if (newPass1.equals(newPass2)) {
                 newUser.setHashedPassword(newPass1);
                 userService.create(newUser);
@@ -66,7 +66,7 @@ public class UserPage {
     }
 
     public void forgotPassword() {
-        UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
         String username = console.getStringInput("Enter your username");
         if (userService.contains(username)) {
             User newUser = userService.read(username);
@@ -88,7 +88,7 @@ public class UserPage {
     }
 
     private void removeUser(String username) {
-        UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
         userService.delete(username);
     }
 }

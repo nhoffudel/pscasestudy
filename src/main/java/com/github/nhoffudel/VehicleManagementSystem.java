@@ -14,7 +14,7 @@ public class VehicleManagementSystem implements Runnable {
         while (running) {
             String smsDashboardInput = getVehicleManagementSystemDashboardInput();
             if ("login".equals(smsDashboardInput)) {
-                UserService userService = new UserService(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+                UserService userService = new UserService(SQLiteDBConnection.VMS_USERS);
                 String username = console.getStringInput("Enter your username:");
                 if (!userService.contains(username)) System.out.println("User not found");
                 else {

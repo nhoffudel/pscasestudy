@@ -13,13 +13,17 @@ public class JdbcConfigurator {
     static {
         // Attempt to register JDBC Driver
         try {
-            DriverManager.registerDriver(Driver.class.newInstance());
-        } catch (InstantiationException | IllegalAccessException | SQLException e1) {
-            throw new Error(e1);
+//            DriverManager.registerDriver(Driver.class.newInstance());
+//        } catch (InstantiationException | IllegalAccessException | SQLException e1) {
+//            throw new Error(e1);
+//        }
+            DriverManager.registerDriver(new org.sqlite.JDBC());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    private static final DatabaseConnection dbc = DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM;
+        private static final SQLiteDBConnection dbc = SQLiteDBConnection.VEHICLE_MANAGEMENT_SYSTEM;
 
     public static void initialize() {
 //        if (getOverwriteInput().equals("yes")){

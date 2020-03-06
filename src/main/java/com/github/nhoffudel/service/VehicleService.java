@@ -1,6 +1,6 @@
 package com.github.nhoffudel.service;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.Vehicle;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +11,18 @@ import java.util.List;
 
 @Service
 public class VehicleService {
-    private final DatabaseConnection dbc;
+    private final SQLiteDBConnection dbc;
 
-    public VehicleService(DatabaseConnection dbc) {
+    public VehicleService(SQLiteDBConnection dbc) {
         this.dbc = dbc;
     }
 
     public VehicleService() {
-        this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        this(SQLiteDBConnection.VMS_VEHICLES);
+    }
+
+    public void close(){
+        dbc.close();
     }
 
     public Vehicle create(Vehicle vehicle){

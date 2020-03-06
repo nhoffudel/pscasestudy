@@ -1,6 +1,6 @@
 package com.github.nhoffudel.service;
 
-import com.github.nhoffudel.DatabaseConnection;
+import com.github.nhoffudel.SQLiteDBConnection;
 import com.github.nhoffudel.model.Trip;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +11,14 @@ import java.util.List;
 
 @Service
 public class TripService {
-    private final DatabaseConnection dbc;
+    private final SQLiteDBConnection dbc;
 
-    public TripService(DatabaseConnection dbc) {
+    public TripService(SQLiteDBConnection dbc) {
         this.dbc = dbc;
     }
 
     public TripService() {
-        this(DatabaseConnection.VEHICLE_MANAGEMENT_SYSTEM);
+        this(SQLiteDBConnection.VMS_TRIPS);
     }
 
     public Trip create(Trip trip) {
