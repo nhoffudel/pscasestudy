@@ -1,0 +1,41 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+body {
+  font: 120% sans-serif;
+  font-family: 'Comic Sans MS';
+  margin: 0em;
+  background-color: #0000FF;
+}
+
+#homebanner {
+  background-color: #000000;
+  background-image: url(./img/HomeBanner.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  background-size: cover;
+}
+
+.MenuButton {
+  color: #ffffff;
+}
+
+h1, h2, h3 {
+  font-family: 'Comic Sans MS', sans-serif;
+  color: #FFFF00;
+  font-weight: 300;
+}
+
+a {
+  color: #ffaa00;
+  text-decoration: none;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.8;
+  margin-top: 0em;
+  color: #00FF00
+}

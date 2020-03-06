@@ -1,0 +1,90 @@
+*, *:before, *:after {
+  font-family: 'Comic Sans MS';
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+body {
+  font: 120% sans-serif;
+  margin: 0em;
+  background-color: #0000FF;
+}
+
+.homebanner {
+  background-color: #000000;
+  background-image: url(img/HomeBanner.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  background-size: cover;
+}
+
+.MenuButton {
+  color: #ffffff;
+}
+
+label {
+  color: #FF00FF
+}
+
+h1, h2, h3 {
+  color: #FFFF00;
+  font-weight: 300;
+}
+
+a {
+  color: #ffaa00;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff00FF;
+  text-decoration: none;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.8;
+  margin-top: 0em;
+  color: #00FF00
+}
+
+.MenuButton1 {
+  background-color: #AA0000;
+  color: #ffaa00;
+  border: 5px groove #ffaa00;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.MenuButton1:hover {
+  background-color: #FF0000;
+}
+
+.MenuButton2 {
+  background-color: #00AA00;
+  color: #00ffaa;
+  border: 5px groove #00ffAA;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.MenuButton2:hover {
+  background-color: #00ff00;
+}
+
+.MenuButton3 {
+  background-color: #0000AA;
+  color: #00FFFF;
+  border: 5px groove #00FFFF;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.MenuButton3:hover {
+  background-color: #0000FF;
+}
+
+.form-control {
+  background-color: #000000;
+  color: #ffffff
+}
