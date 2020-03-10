@@ -1,9 +1,9 @@
-Vehicle Management System featuring Spring, SQLite, and React.
-Run ConsoleApplication for a fully functional multiuser terminal version.
-Run SpringApp for the Spring version of the back end and use Postman.
-Run "npm start" in front_end_vehdb for a single user React front end.
+<p>Vehicle Management System featuring Spring, SQLite, and React.</p>
+<p>Run ConsoleApplication for a fully functional multiuser terminal version.</p>
+<p>Run SpringApp for the Spring version of the back end and use Postman.</p>
+<p>Run "npm start" in front_end_vehdb for a single user React front end.</p>
 
-Necessary dependencies for React:
-npm install
-Webpack (npm install -g webpack)
-dev-server (npm install -g webpack-dev-server)
+<p>Necessary dependencies for React:</p>
+<p>npm install</p>
+<p>Webpack (npm install -g webpack)</p>
+<p>dev-server (npm install -g webpack-dev-server)</p>
