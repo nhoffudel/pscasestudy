@@ -28,7 +28,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
